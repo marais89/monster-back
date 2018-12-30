@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -24,8 +24,8 @@ public class Individu {
 
     private String email;
 
-    private Integer numeroTel;
+    private String numeroTel;
 
-    private Instant date_naissance;
+    private LocalDate date_naissance;
 
 }

@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -36,8 +36,8 @@ public class Individu {
     public String adresse;
 
     @NotNull
-    @ApiModelProperty(example = "20/01/2001", name = "date de naissance de l'individu")
-    public Instant dateNaissance;
+    @ApiModelProperty(example = "2011-07-14", name = "date de naissance de l'individu")
+    public LocalDate dateNaissance;
 
     @Email
     @ApiModelProperty(example = "toto@domaine.com", name = "adresse e-mail de l'individu")
@@ -45,6 +45,6 @@ public class Individu {
 
     @NotNull
     @ApiModelProperty(example = "06 23 23 23 23", name = "numero telephone de l'individu")
-    public Integer numTel;
+    public String numTel;
 
 }

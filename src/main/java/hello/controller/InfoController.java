@@ -2,14 +2,12 @@ package hello.controller;
 
 import hello.dto.Individu;
 import hello.facade.IndividuFacade;
-import hello.service.IndividusService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Valid
@@ -20,8 +18,6 @@ public class InfoController {
 
     public static final String EMAIL = "email";
     public static final String NUMERO = "numero";
-    private static long increment = 0;
-    private static List<Individu> individus = new ArrayList<Individu>();
 
     @Autowired
     private IndividuFacade individuFacade;
@@ -31,7 +27,6 @@ public class InfoController {
     @RequestMapping(value = "/individus", method = RequestMethod.GET)
     @ApiOperation(value = "liste d'individu")
     public List<Individu> findAll() {
-
         return individuFacade.findAll();
     }
 
@@ -47,9 +42,9 @@ public class InfoController {
         return individuFacade.getByNumeroTel(numero);
     }
 
-    @RequestMapping(path = "/individus" , method = RequestMethod.PUT)
+    @RequestMapping(path = "/individus" , method = RequestMethod.POST)
     @ApiOperation(value = "ajout d'un individu")
-    public void save(Individu individu){
+    public void save(@RequestBody Individu individu){
         individuFacade.save(individu);
     }
 
