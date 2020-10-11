@@ -3,20 +3,18 @@ package hello.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @ApiModel
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Individu {
+public class IndividuDto {
 
     private static int increment = 1;
 
@@ -37,14 +35,33 @@ public class Individu {
 
     @NotNull
     @ApiModelProperty(example = "2011-07-14", name = "date de naissance de l'individu")
-    public LocalDate dateNaissance;
+    public LocalDate date_naissance;
 
     @Email
     @ApiModelProperty(example = "toto@domaine.com", name = "adresse e-mail de l'individu")
     public String email;
 
     @NotNull
-    @ApiModelProperty(example = "06 23 23 23 23", name = "numero telephone de l'individu")
-    public String numTel;
+    @ApiModelProperty(example = "0623232323", name = "numero telephone de l'individu")
+    public String numeroTel;
+
+    @NotNull
+    @ApiModelProperty(example = "2011-07-14", name = "date de création de l'individu")
+    public LocalDate date_ceation;
+
+    @NotNull
+    @ApiModelProperty(example = "1", name = "niveau de l'individu")
+    public int niveau;
+
+    @NotNull
+    @ApiModelProperty(example = "active", name = "statut de l'individu")
+    public String statut;
+
+    @NotNull
+    @ApiModelProperty(example = "$2y$zejkmjzenfiben456#", name = "mot de passe de l'individu  crypté")
+    public String pass;
+
+    @ApiModelProperty(example = "NULL", name = "image de l'individu")
+    public byte[] user_image;
 
 }

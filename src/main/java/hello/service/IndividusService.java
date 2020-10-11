@@ -1,14 +1,19 @@
 package hello.service;
 
+import hello.dto.IndividuDto;
+
 import java.util.List;
 
 public interface IndividusService {
 
-    void save(hello.dto.Individu individu);
+    void save(IndividuDto individuDto);
 
-    List<hello.dto.Individu> findAll();
+    List<IndividuDto> findAll();
 
-    List<hello.dto.Individu> findByEmail(String email);
+    List<IndividuDto> findByEmail(String email);
 
-    List<hello.dto.Individu> findByNumeroTel(Integer numero);
+    List<IndividuDto> findByNumeroTel(String numero);
+
+    void delete(Long id);
+
 }

@@ -1,31 +1,37 @@
 package hello.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "individu")
 public class Individu {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
 
-    private String nom;
+    public String nom;
 
-    private String prenom;
+    public String prenom;
 
-    private String adresse;
+    public String adresse;
 
-    private String email;
+    public String email;
 
-    private String numeroTel;
+    public String numeroTel;
 
-    private LocalDate date_naissance;
+    public LocalDate date_naissance;
+
+    public LocalDate date_ceation;
+
+    public int niveau;
+
+    public String statut;
+
+    public byte[] user_image;
 
 }
