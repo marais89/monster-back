@@ -16,6 +16,8 @@ public interface IndividuRepository extends CrudRepository<Individu, Integer> {
 
     public List<Individu> findByNumeroTel(String numero);
 
+    public List<Individu> findById(Long id);
+
     public void deleteIndividuById(Long id);
 }
 

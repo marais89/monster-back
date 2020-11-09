@@ -35,7 +35,7 @@ public class InfoController {
 
     @RequestMapping(path = "/individus/email/{email}", method = RequestMethod.GET)
     @ApiOperation(value = "recupere individu par adresse email")
-    public List<IndividuDto> getByEmail(@PathVariable(EMAIL) String email) {
+    public IndividuDto getByEmail(@PathVariable(EMAIL) String email) {
         return individuFacade.getByEmail(email);
     }
 
@@ -49,6 +49,12 @@ public class InfoController {
     @ApiOperation(value = "ajout d'un individuDto")
     public void save(@RequestBody IndividuDto individuDto) {
         individuFacade.save(individuDto);
+    }
+
+    @RequestMapping(path = "/individus/update", method = RequestMethod.POST)
+    @ApiOperation(value = "met a jour d'un individuDto")
+    public void update(@RequestBody IndividuDto individuDto) {
+        individuFacade.update(individuDto);
     }
 
     @RequestMapping(path = "/individus/delete/id/{id}", method = RequestMethod.DELETE)

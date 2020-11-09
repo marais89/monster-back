@@ -2,6 +2,7 @@ package hello.service;
 
 import hello.dto.IndividuDto;
 import hello.entity.Authorities;
+import hello.entity.Individu;
 import hello.entity.User;
 import hello.mappeur.IndividusMapper;
 import hello.repository.AuthoritiesRepository;
@@ -41,6 +42,12 @@ public class IndividusServiceImpl implements IndividusService {
     }
 
     @Override
+    public IndividuDto update(IndividuDto individuDto) {
+        individuRepository.save(individusMapper.mapToEntity(individuDto));
+        return individusMapper.mapToDto(individuRepository.findById(individuDto.id).get(0));
+    }
+
+    @Override
     public List<IndividuDto> findAll() {
 
         List<IndividuDto> individuses = new ArrayList<>();
@@ -49,10 +56,10 @@ public class IndividusServiceImpl implements IndividusService {
     }
 
     @Override
-    public List<IndividuDto> findByEmail(String email) {
+    public IndividuDto findByEmail(String email) {
         List<IndividuDto> individuses = new ArrayList<>();
         individuRepository.findByEmail(email).stream().forEach(individu -> individuses.add(individusMapper.mapToDto(individu)));
-        return individuses;
+        return individuses.size()>0 ? individuses.get(0) : null;
     }
 
     @Override

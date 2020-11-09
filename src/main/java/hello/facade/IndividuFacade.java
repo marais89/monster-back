@@ -22,7 +22,7 @@ public class IndividuFacade {
         return individusService.findAll();
     }
 
-    public List<IndividuDto> getByEmail(String email) {
+    public IndividuDto getByEmail(String email) {
         return individusService.findByEmail(email);
     }
 
@@ -32,6 +32,10 @@ public class IndividuFacade {
 
     public void save(IndividuDto individuDto) {
         individusService.save(individuDto);
+    }
+
+    public IndividuDto update(IndividuDto individuDto) {
+        return individusService.update(individuDto);
     }
 
     public void delete(Long id) {
