@@ -1,6 +1,7 @@
 package hello.controller;
 
 import hello.dto.IndividuDto;
+import hello.dto.IndividuStatus;
 import hello.dto.UserDto;
 import hello.facade.IndividuFacade;
 import io.swagger.annotations.Api;
@@ -23,6 +24,7 @@ public class InfoController {
     public static final String EMAIL = "email";
     public static final String NUMERO = "numero";
     public static final String ID = "id";
+    public static final String LOGIN = "login";
 
     @Autowired
     private IndividuFacade individuFacade;
@@ -53,14 +55,32 @@ public class InfoController {
 
     @RequestMapping(path = "/individus/update", method = RequestMethod.POST)
     @ApiOperation(value = "met a jour d'un individuDto")
-    public void update(@RequestBody IndividuDto individuDto) {
-        individuFacade.update(individuDto);
+    public IndividuDto update(@RequestBody IndividuDto individuDto) {
+        return individuFacade.update(individuDto);
     }
 
     @RequestMapping(path = "/individus/delete/id/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "supprimer un individu par id")
     public void delete(@PathVariable(ID) Long id) {
         individuFacade.delete(id);
+    }
+
+    @RequestMapping(path = "/individus/suspend/login/{login}", method = RequestMethod.POST)
+    @ApiOperation(value = "bloquer un individu par login")
+    public List<IndividuDto> suspend(@PathVariable(LOGIN) String login) {
+        return individuFacade.updateIndividuStatus(login, IndividuStatus.BLOQUE);
+    }
+
+    @RequestMapping(path = "/individus/resume/login/{login}", method = RequestMethod.POST)
+    @ApiOperation(value = "reactiver un individu par login")
+    public List<IndividuDto> resume(@PathVariable(LOGIN) String login) {
+        return individuFacade.updateIndividuStatus(login, IndividuStatus.ACTIVE);
+    }
+
+    @RequestMapping(path = "/individus/deactivate/login/{login}", method = RequestMethod.POST)
+    @ApiOperation(value = "résilier un individu par login")
+    public List<IndividuDto> deactivate(@PathVariable(LOGIN) String login) {
+        return individuFacade.updateIndividuStatus(login, IndividuStatus.RESILIE);
     }
 
     @RequestMapping("/loggedUser")

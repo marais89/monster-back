@@ -19,13 +19,24 @@ public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
 
     @Override
-    public void saveUser(User user) {
-        usersRepository.save(user);
+    public void saveUser(UserDto userDto) {
+        usersRepository.save(userMapper.mapToEntity(userDto));
     }
 
     @Override
     public UserDto getUser(String login) {
-        return userMapper.mapToDto(usersRepository.findByUsername(login));
+        UserDto userDto = userMapper.mapToDto(usersRepository.findByUsername(login));
+        return userDto;
+    }
+
+    @Override
+    public UserDto update(UserDto userDto) {
+        User user = usersRepository.findByUsername(userDto.username);
+        if (user != null) {
+            user.enabled = userDto.enabled;
+            return userMapper.mapToDto(usersRepository.save(user));
+        }
+        return null;
     }
 
 }

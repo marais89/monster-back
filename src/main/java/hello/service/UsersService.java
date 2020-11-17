@@ -5,7 +5,9 @@ import hello.entity.User;
 
 public interface UsersService {
 
-    public void saveUser(User user);
+    public void saveUser(UserDto userDto);
 
     public UserDto getUser(String login);
+
+    public UserDto update(UserDto userDto);
 }

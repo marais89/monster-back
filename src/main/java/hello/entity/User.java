@@ -3,11 +3,12 @@ package hello.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +18,7 @@ public class User {
 
     public String password;
 
-    public String enabled;
+    public boolean enabled;
 
 
 }

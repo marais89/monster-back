@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface IndividusService {
 
-    void save(IndividuDto individuDto);
+    void saveNewUser(IndividuDto individuDto);
 
-    IndividuDto update(IndividuDto individuDto);
+    IndividuDto saveOrUpdate(IndividuDto individuDto);
+
+    IndividuDto findById(Long id);
 
     List<IndividuDto> findAll();
 

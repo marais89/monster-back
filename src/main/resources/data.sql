@@ -44,9 +44,9 @@ create table users
     id       bigint            not null
 );
 
-insert  into users(username, password, enabled, id) VALUES
-('test.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',true ,1),
-('test2.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',true ,1);
+insert into users(username, password, enabled, id) VALUES
+('test.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',1 ,1),
+('test2.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',1 ,1);
 
 
 create table authorities

@@ -1,7 +1,9 @@
 package hello.facade;
 
 import hello.dto.IndividuDto;
+import hello.dto.IndividuStatus;
 import hello.dto.UserDto;
+import hello.mappeur.UserMapper;
 import hello.service.IndividusService;
 import hello.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class IndividuFacade {
     @Autowired
     UsersService usersService;
 
+    @Autowired
+    UserMapper userMapper;
+
     public List<IndividuDto> findAll() {
         return individusService.findAll();
     }
@@ -31,11 +36,25 @@ public class IndividuFacade {
     }
 
     public void save(IndividuDto individuDto) {
-        individusService.save(individuDto);
+        individusService.saveNewUser(individuDto);
     }
 
     public IndividuDto update(IndividuDto individuDto) {
-        return individusService.update(individuDto);
+        return individusService.saveOrUpdate(individuDto);
+    }
+
+    public List<IndividuDto> updateIndividuStatus(String login, IndividuStatus status) {
+        IndividuDto individuToDisable = individusService.findByEmail(login);
+        UserDto userDto = new UserDto();
+        userDto.username = login;
+        userDto.enabled = status.equals(IndividuStatus.ACTIVE) || status.equals(IndividuStatus.ATTENTE);
+        userDto = usersService.update(userDto);
+        if (individuToDisable != null && userDto != null) {
+            individuToDisable.statut = status.libelle;
+            individusService.saveOrUpdate(individuToDisable);
+            return individusService.findAll();
+        }
+        return null;
     }
 
     public void delete(Long id) {

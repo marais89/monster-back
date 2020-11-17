@@ -4,13 +4,12 @@ import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @ApiModel
-@Getter
-@Setter
-@AllArgsConstructor
-@RequiredArgsConstructor
 public class UserDto {
 
-  public String login;
+  public String username;
   public String password;
-  public String enabled;
+  public boolean enabled;
+
+  public UserDto() {
+  }
 }

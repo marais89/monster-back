@@ -3,12 +3,13 @@ package hello.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "individu")
-public class Individu {
+public class Individu implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

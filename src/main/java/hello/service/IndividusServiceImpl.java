@@ -2,7 +2,6 @@ package hello.service;
 
 import hello.dto.IndividuDto;
 import hello.entity.Authorities;
-import hello.entity.Individu;
 import hello.entity.User;
 import hello.mappeur.IndividusMapper;
 import hello.repository.AuthoritiesRepository;
@@ -34,17 +33,22 @@ public class IndividusServiceImpl implements IndividusService {
     private AuthoritiesRepository authoritiesRepository;
 
     @Override
-    public void save(IndividuDto individuDto) {
-
+    public void saveNewUser(IndividuDto individuDto) {
         individuRepository.save(individusMapper.mapToEntity(individuDto));
         usersRepository.save(buildUser(individuDto));
         authoritiesRepository.save(buildAuthorities(individuDto));
     }
 
     @Override
-    public IndividuDto update(IndividuDto individuDto) {
-        individuRepository.save(individusMapper.mapToEntity(individuDto));
-        return individusMapper.mapToDto(individuRepository.findById(individuDto.id).get(0));
+    //TODO remove unused code
+    public IndividuDto saveOrUpdate(IndividuDto individuDto) {
+        return individusMapper.mapToDto(individuRepository.save(individusMapper.mapToEntity(individuDto)));
+        //return individuRepository.findById(individuDto.id).get(0));
+    }
+
+    @Override
+    public IndividuDto findById(Long id) {
+        return individusMapper.mapToDto(individuRepository.findById(id).stream().findFirst().orElse(null));
     }
 
     @Override
@@ -59,7 +63,7 @@ public class IndividusServiceImpl implements IndividusService {
     public IndividuDto findByEmail(String email) {
         List<IndividuDto> individuses = new ArrayList<>();
         individuRepository.findByEmail(email).stream().forEach(individu -> individuses.add(individusMapper.mapToDto(individu)));
-        return individuses.size()>0 ? individuses.get(0) : null;
+        return individuses.stream().findFirst().orElse(null);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class IndividusServiceImpl implements IndividusService {
         User user = new User();
         user.password = individu.pass;
         user.username = individu.email;
-        user.enabled = "1";
+        user.enabled = true;
         return user;
     }
 
