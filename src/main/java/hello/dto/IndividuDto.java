@@ -2,18 +2,14 @@ package hello.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Data
 @ApiModel
-@AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class IndividuDto {
 
     private static int increment = 1;

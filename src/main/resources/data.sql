@@ -8,7 +8,7 @@ create table individu
     nom            varchar(20)   null,
     prenom         varchar(20)   null,
     adresse        varchar(200)  null,
-    email          varchar(100)  null,
+    email          varchar(100) unique null,
     date_naissance date          null,
     numero_tel     varchar(255)  null,
     date_creation  date          null,
@@ -46,7 +46,7 @@ create table users
 
 insert into users(username, password, enabled, id) VALUES
 ('test.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',1 ,1),
-('test2.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',1 ,1);
+('test2.test@gmail.com','$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C',1 ,2);
 
 
 create table authorities
@@ -61,5 +61,5 @@ create table authorities
 );
 
 insert into authorities(username, authority, id) VALUES
-('test.test@gmail.com','USER', 1),
-('test2.test@gmail.com','USER', 1);
+('test.test@gmail.com','ADMIN', 1),
+('test2.test@gmail.com','USER', 2);

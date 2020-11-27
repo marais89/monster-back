@@ -1,6 +1,7 @@
 package hello.controller;
 
 import hello.dto.IndividuDto;
+import hello.dto.IndividuGlobalInfosDto;
 import hello.dto.IndividuStatus;
 import hello.dto.UserDto;
 import hello.facade.IndividuFacade;
@@ -36,13 +37,13 @@ public class InfoController {
     }
 
     @RequestMapping(path = "/individus/email/{email}", method = RequestMethod.GET)
-    @ApiOperation(value = "recupere individu par adresse email")
-    public IndividuDto getByEmail(@PathVariable(EMAIL) String email) {
+    @ApiOperation(value = "recupére les informations d'individu par son adresse email")
+    public IndividuGlobalInfosDto getByEmail(@PathVariable(EMAIL) String email) {
         return individuFacade.getByEmail(email);
     }
 
     @RequestMapping(path = "/individus/numeroTel/{numero}", method = RequestMethod.GET)
-    @ApiOperation(value = "recupere individu par nemero telephone")
+    @ApiOperation(value = "recupere individu par nemero téléphone")
     public List<IndividuDto> getByNumeroTel(@PathVariable(NUMERO) String numero) {
         return individuFacade.getByNumeroTel(numero);
     }

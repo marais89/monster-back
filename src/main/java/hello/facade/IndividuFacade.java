@@ -1,9 +1,8 @@
 package hello.facade;
 
-import hello.dto.IndividuDto;
-import hello.dto.IndividuStatus;
-import hello.dto.UserDto;
+import hello.dto.*;
 import hello.mappeur.UserMapper;
+import hello.service.AuthoritiesService;
 import hello.service.IndividusService;
 import hello.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,9 @@ public class IndividuFacade {
     private IndividusService individusService;
 
     @Autowired
+    private AuthoritiesService authoritiesService;
+
+    @Autowired
     UsersService usersService;
 
     @Autowired
@@ -27,8 +29,13 @@ public class IndividuFacade {
         return individusService.findAll();
     }
 
-    public IndividuDto getByEmail(String email) {
-        return individusService.findByEmail(email);
+    public IndividuGlobalInfosDto getByEmail(String email) {
+        IndividuDto individuDto = individusService.findByEmail(email);
+        if (individuDto != null) {
+            AuthoritiesDto authoritiesDto = authoritiesService.retrieveUserAutorities(email);
+            return new IndividuGlobalInfosDto(individuDto, UserRole.valueOf(authoritiesDto.authority));
+        }
+        return null;
     }
 
     public List<IndividuDto> getByNumeroTel(String numero) {
