@@ -61,5 +61,5 @@ create table authorities
 );
 
 insert into authorities(username, authority, id) VALUES
-('test.test@gmail.com','ADMIN', 1),
-('test2.test@gmail.com','USER', 2);
+('test.test@gmail.com','ROLE_ADMIN', 1),
+('test2.test@gmail.com','ROLE_USER', 2);

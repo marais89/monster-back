@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +33,7 @@ public class InfoController {
     private IndividuFacade individuFacade;
 
     @RequestMapping(value = "/individus", method = RequestMethod.GET)
+    @Secured("ROLE_ADMIN")
     @ApiOperation(value = "liste d'individu")
     public List<IndividuDto> findAll() {
         return individuFacade.findAll();

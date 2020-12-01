@@ -2,9 +2,9 @@ package hello.dto;
 
 public enum UserRole {
 
-    ADMIN,
+    ROLE_ADMIN,
 
-    SUPERUSER,
+    ROLE_SUPERUSER,
 
-    USER,
+    ROLE_USER,
 }
