@@ -90,7 +90,7 @@ public class IndividusServiceImpl implements IndividusService {
     private Authorities buildAuthorities(IndividuDto individu) {
         Authorities authorities = new Authorities();
         authorities.username = individu.email;
-        authorities.authority = "user";
+        authorities.authority = "ROLE_USER";
         return authorities;
     }
 
