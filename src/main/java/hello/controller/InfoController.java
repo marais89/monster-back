@@ -1,15 +1,11 @@
 package hello.controller;
 
-import hello.dto.IndividuDto;
-import hello.dto.IndividuGlobalInfosDto;
-import hello.dto.IndividuStatus;
-import hello.dto.UserDto;
+import hello.dto.*;
 import hello.facade.IndividuFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,8 +49,8 @@ public class InfoController {
 
     @RequestMapping(path = "/individus/create", method = RequestMethod.POST)
     @ApiOperation(value = "ajout d'un individuDto")
-    public void save(@RequestBody IndividuDto individuDto) {
-        individuFacade.save(individuDto);
+    public SavingResponseDto save(@RequestBody IndividuDto individuDto) {
+        return individuFacade.save(individuDto);
     }
 
     @RequestMapping(path = "/individus/update", method = RequestMethod.POST)

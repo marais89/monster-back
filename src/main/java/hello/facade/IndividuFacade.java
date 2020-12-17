@@ -42,8 +42,20 @@ public class IndividuFacade {
         return individusService.findByNumeroTel(numero);
     }
 
-    public void save(IndividuDto individuDto) {
-        individusService.saveNewUser(individuDto);
+    public SavingResponseDto save(IndividuDto individuDto) {
+        if (individuDto.email == null || individuDto.email == "") {
+            return new SavingResponseDto(SavingCodeResponse.BAD_REQUEST.code);
+        }
+        IndividuDto registredUser = individusService.findByEmail(individuDto.email);
+        if (registredUser != null) {
+            return new SavingResponseDto(SavingCodeResponse.USER_EXISTE.code);
+        }
+        try {
+            individusService.saveNewUser(individuDto);
+            return new SavingResponseDto(SavingCodeResponse.OK.code);
+        } catch (Exception ex) {
+            return new SavingResponseDto(SavingCodeResponse.TECHNICAL_ERROR.code);
+        }
     }
 
     public IndividuDto update(IndividuDto individuDto) {
