@@ -1,6 +1,7 @@
 package hello.controller;
 
 import hello.dto.*;
+import hello.facade.AdressFacade;
 import hello.facade.IndividuFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,9 @@ public class InfoController {
 
     @Autowired
     private IndividuFacade individuFacade;
+
+    @Autowired
+    private AdressFacade adressFacade;
 
     @RequestMapping(value = "/individus", method = RequestMethod.GET)
     @Secured("ROLE_ADMIN")
@@ -94,5 +98,11 @@ public class InfoController {
                 .substring("Basic".length()).trim();
         return () -> new String(Base64.getDecoder()
                 .decode(authToken)).split(":")[0];
+    }
+
+    @RequestMapping(path = "individus/adress", method = RequestMethod.POST)
+    @ApiOperation(value = "get adress")
+    public List<AdressDto> findAdress(@RequestBody List<String> keys) {
+        return adressFacade.findAdress(keys);
     }
 }

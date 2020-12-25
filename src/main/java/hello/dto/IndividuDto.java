@@ -30,6 +30,14 @@ public class IndividuDto {
     public String adresse;
 
     @NotNull
+    @ApiModelProperty(example = "Tunis", name = "ville de l'individu")
+    public String ville;
+
+    @NotNull
+    @ApiModelProperty(example = "7001", name = "code postale de l'individu")
+    public int code_postale;
+
+    @NotNull
     @ApiModelProperty(example = "2011-07-14", name = "date de naissance de l'individu")
     public LocalDate date_naissance;
 

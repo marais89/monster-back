@@ -20,6 +20,10 @@ public class Individu implements Serializable {
 
     public String adresse;
 
+    public String ville;
+
+    public int code_postale;
+
     public String email;
 
     public String numeroTel;
