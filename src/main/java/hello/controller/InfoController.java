@@ -25,6 +25,7 @@ public class InfoController {
     public static final String NUMERO = "numero";
     public static final String ID = "id";
     public static final String LOGIN = "login";
+    public static final String GOUVERNORAT = "gouvernorat";
 
     @Autowired
     private IndividuFacade individuFacade;
@@ -100,9 +101,16 @@ public class InfoController {
                 .decode(authToken)).split(":")[0];
     }
 
-    @RequestMapping(path = "individus/adress", method = RequestMethod.POST)
+    @RequestMapping(path = "individus/adress/gouvernorat/{gouvernorat}", method = RequestMethod.GET)
     @ApiOperation(value = "get adress")
-    public List<AdressDto> findAdress(@RequestBody List<String> keys) {
-        return adressFacade.findAdress(keys);
+    public List<AdressDto> findAdressByGouvernorat(@PathVariable(GOUVERNORAT) int gouvernoratId) {
+        return adressFacade.findAdressByGouvernorat(gouvernoratId);
     }
+
+    @RequestMapping(path = "individus/allTown", method = RequestMethod.GET)
+    @ApiOperation(value = "get all town")
+    public List<TownDto> findAllTown() {
+        return adressFacade.findAllTown();
+    }
+
 }

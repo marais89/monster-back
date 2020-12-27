@@ -102,15 +102,15 @@ insert into town(id, name) VALUES
 create table adress
 (
     id int primary key not null,
-    gouvernorat int not null,
+    TOWN_ID int not null,
     ville varchar(100) not null,
     cite varchar(100) not null,
     code int(4) not null,
     constraint adress_ibfk_1
-    foreign key (gouvernorat) references town(id)
+    foreign key (TOWN_ID) references town(id)
 );
 
-insert into adress(id, gouvernorat, ville, cite, code) VALUES
+insert into adress(id, TOWN_ID, ville, cite, code) VALUES
 (0, 2, 'Ariana Ville', 'Centre Commercial Ikram', 2037),
 (1, 2, 'Ariana Ville', 'Residence Kortoba', 2058),
 (2, 2, 'Ariana Ville', 'Nouvelle Ariana', 2080),
