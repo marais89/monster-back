@@ -20,7 +20,11 @@ public class Individu implements Serializable {
 
     public String adresse;
 
+    public String gouvernorat;
+
     public String ville;
+
+    public String cite;
 
     public int code_postale;
 

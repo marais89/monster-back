@@ -10,6 +10,10 @@ create table individu
     nom            varchar(20)   null,
     prenom         varchar(20)   null,
     adresse        varchar(200)  null,
+    gouvernorat varchar(50) null,
+    ville varchar(50) null,
+    cite varchar(50) null,
+    code_postale  int(4) null,
     email          varchar(100) unique null,
     date_naissance date          null,
     numero_tel     varchar(255)  null,
@@ -25,6 +29,10 @@ id,
 nom,
 prenom,
 adresse,
+gouvernorat,
+ville,
+cite,
+code_postale,
 email,
 date_naissance,
 numero_tel,
@@ -33,8 +41,8 @@ niveau,
 statut,
 user_image,
 date_ceation) VALUES
-  (1, 'Aliko', 'Dangote', '9 rue maurice berteaux', 'test.test@gmail.com', current_date, '0678787878',current_date, 2, 'active',null, null ),
-  (2, 'Folrunsho', 'Alakija', '9 rue maurice berteaux', 'test2.test@gmail.com', current_date, '0678787878',current_date, 3, 'active',null, null);
+  (1, 'Aliko', 'Dangote', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test.test@gmail.com', current_date, '0678787878',current_date, 2, 'active',null, null ),
+  (2, 'Folrunsho', 'Alakija', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test2.test@gmail.com', current_date, '0678787878',current_date, 3, 'active',null, null);
 
 
 create table users

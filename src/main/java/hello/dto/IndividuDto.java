@@ -30,6 +30,14 @@ public class IndividuDto {
     public String adresse;
 
     @NotNull
+    @ApiModelProperty(example = "BIZERTE", name = "gouvernorat")
+    public String gouvernorat;
+
+    @NotNull
+    @ApiModelProperty(example = "Jarzouna", name = "cite")
+    public String cite;
+
+    @NotNull
     @ApiModelProperty(example = "Tunis", name = "ville de l'individu")
     public String ville;
 
