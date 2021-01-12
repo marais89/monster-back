@@ -19,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
 
                 .select().apis(RequestHandlerSelectors.basePackage("hello"))
-                .paths(regex("/individus.*"))
+                .paths(regex("/.*"))
                 .build();
     }
 
