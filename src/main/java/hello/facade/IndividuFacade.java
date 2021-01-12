@@ -4,6 +4,7 @@ import hello.dto.*;
 import hello.mappeur.UserMapper;
 import hello.service.AuthoritiesService;
 import hello.service.IndividusService;
+import hello.service.MailService;
 import hello.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class IndividuFacade {
 
     @Autowired
     private IndividusService individusService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private AuthoritiesService authoritiesService;
@@ -52,6 +56,7 @@ public class IndividuFacade {
         }
         try {
             individusService.saveNewUser(individuDto);
+            mailService.sendMail(buildWelcomeMail(individuDto.email));
             return new SavingResponseDto(SavingCodeResponse.OK.code);
         } catch (Exception ex) {
             return new SavingResponseDto(SavingCodeResponse.TECHNICAL_ERROR.code);
@@ -82,5 +87,13 @@ public class IndividuFacade {
 
     public UserDto findUser(String login) {
         return usersService.getUser(login);
+    }
+
+    private MailDto buildWelcomeMail(String to) {
+        MailDto mailDto = new MailDto();
+        mailDto.to = to;
+        mailDto.object = "Bienvenue chez MONSTER";
+        mailDto.content = "Bonjour, \n Toute l'équipe  est heureuse de vous compter parmi ses clients.\n Bonne journée.";
+        return mailDto;
     }
 }

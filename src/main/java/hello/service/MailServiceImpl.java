@@ -21,7 +21,7 @@ public class MailServiceImpl implements MailService {
 
         message.setTo(mailDto.to);
         message.setSubject(mailDto.object);
-        message.setText("Bonjour,\n merci de votre confiance ");
+        message.setText(mailDto.content);
 
         // Send Message!
         this.emailSender.send(message);
