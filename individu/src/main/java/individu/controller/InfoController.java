@@ -25,6 +25,7 @@ public class InfoController {
     public static final String NUMERO = "numero";
     public static final String ID = "id";
     public static final String LOGIN = "login";
+    public static final String KEY = "key";
     public static final String GOUVERNORAT = "gouvernorat";
 
     @Autowired
@@ -43,13 +44,13 @@ public class InfoController {
     @RequestMapping(path = "/individus/email/{email}", method = RequestMethod.GET)
     @ApiOperation(value = "recupére les informations d'individu par son adresse email")
     public IndividuGlobalInfosDto getByEmail(@PathVariable(EMAIL) String email) {
-        return individuFacade.getByEmail(email);
+        return individuFacade.findByEmail(email);
     }
 
     @RequestMapping(path = "/individus/numeroTel/{numero}", method = RequestMethod.GET)
     @ApiOperation(value = "recupere individu par nemero téléphone")
     public List<IndividuDto> getByNumeroTel(@PathVariable(NUMERO) String numero) {
-        return individuFacade.getByNumeroTel(numero);
+        return individuFacade.findByNumeroTel(numero);
     }
 
     @RequestMapping(path = "/individus/create", method = RequestMethod.POST)
@@ -86,6 +87,12 @@ public class InfoController {
     @ApiOperation(value = "résilier un individu par login")
     public List<IndividuDto> deactivate(@PathVariable(LOGIN) String login) {
         return individuFacade.updateIndividuStatus(login, IndividuStatus.RESILIE);
+    }
+
+    @RequestMapping(path = "/individus/login/{login}/key/{key}/validation", method = RequestMethod.POST)
+    @ApiOperation(value = "validation keys")
+    public Boolean validateKey(@PathVariable(LOGIN) String login,@PathVariable(KEY) String key) {
+        return individuFacade.validateKey(login, key);
     }
 
     @RequestMapping("/loggedUser")

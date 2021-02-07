@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class Individu implements Serializable {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long id;
 
     public String nom;

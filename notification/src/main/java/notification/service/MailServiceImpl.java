@@ -4,9 +4,12 @@ package notification.service;
 import lombok.RequiredArgsConstructor;
 import notification.dto.MailDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -16,16 +19,14 @@ public class MailServiceImpl implements MailService {
     public JavaMailSender emailSender;
 
     @Override
-    public void sendMail(MailDto mailDto) {
-        // Create a Simple MailMessage.
-        SimpleMailMessage message = new SimpleMailMessage();
-        //TODO set e-amail content according to type value: 'WELCOME, INFO, ...'
-        message.setTo(mailDto.to);
-        message.setSubject(mailDto.object);
-        message.setText(mailDto.content);
-
-        // Send Message!
-        this.emailSender.send(message);
+    public void sendMail(MailDto mailDto) throws MessagingException {
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+        helper.setText(mailDto.content, true);
+        helper.setTo(mailDto.to);
+        helper.setSubject(mailDto.subject);
+        helper.setFrom("welcome@monster.com");
+        emailSender.send(mimeMessage);
 
     }
 }

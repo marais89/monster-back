@@ -18,7 +18,7 @@ public class MailDto {
 
     @NotNull
     @ApiModelProperty(example = "welcome", name = "Objet de l'E-mail")
-    public String object;
+    public String subject;
 
     @NotNull
     @ApiModelProperty(example = "toto", name = "le continu de l'E-mail")

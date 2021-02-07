@@ -7,6 +7,7 @@ import notification.facade.MailFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 @Valid
@@ -22,7 +23,7 @@ public class MailController {
 
     @RequestMapping(path = "/mail/send", method = RequestMethod.POST)
     @ApiOperation(value = "envoi un e-mail")
-    public void sendMail(@RequestBody MailDto mailDto) {
+    public void sendMail(@RequestBody MailDto mailDto) throws MessagingException {
         mailFacade.sendMail(mailDto);
     }
 
