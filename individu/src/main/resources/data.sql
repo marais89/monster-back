@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS adress;
 DROP TABLE IF EXISTS town;
-DROP TABLE IF EXISTS keys;
+DROP TABLE IF EXISTS validationKeys;
 
 create table individu
 (
@@ -85,7 +85,7 @@ CREATE TABLE validationKeys
     used          tinyint default 0 not null
 );
 
-insert into validationKeys(id, username, key, creation_date)
+insert into validationKeys(id, username, secret, creation_date, used)
 values (0001, 'test.test@gmail.com', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
        (0002, 'test2.test@gmail.com', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
 
