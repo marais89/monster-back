@@ -166,7 +166,7 @@ public class IndividuFacade {
             return individusService.findAll();
         }
         historyFacade.updateHistoryAfterFaild(updateUserEvent);
-        return Collections.emptyList();
+        return null;
     }
 
     /**
