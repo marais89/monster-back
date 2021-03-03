@@ -1,0 +1,17 @@
+package com.monster.history.dto;
+
+public enum ActionType {
+
+    AUTHENTICATION,
+    LOGOUT,
+    CREATE_ACCOUNT,
+    UPDATE_ACCOUNT,
+    VALIDATE_USER,
+    GENERATE_AND_SAVE_VALIDATION_KEY,
+    SEND_EMAIL,
+    SUSPEND_USER,
+    REACTIVATE_USER,
+    DEACTIVATE_USER,
+    UNKNOWN,
+
+}

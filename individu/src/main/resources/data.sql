@@ -4,18 +4,20 @@ DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS adress;
 DROP TABLE IF EXISTS town;
 DROP TABLE IF EXISTS validationKeys;
+DROP TABLE IF EXISTS events;
 
 create table individu
 (
-    id             int           not null primary key,
+    id             int   not null  primary key,
     nom            varchar(20) null,
     prenom         varchar(20) null,
+    username       varchar(20) unique not null,
     adresse        varchar(200) null,
     gouvernorat    varchar(50) null,
     ville          varchar(50) null,
     cite           varchar(50) null,
     code_postale   int(4) null,
-    email          varchar(100) unique null,
+    email          varchar(100) unique not null,
     date_naissance date null,
     numero_tel     varchar(255) null,
     date_creation  date null,
@@ -28,6 +30,7 @@ create table individu
 INSERT INTO individu (id,
                       nom,
                       prenom,
+                      username,
                       adresse,
                       gouvernorat,
                       ville,
@@ -41,40 +44,37 @@ INSERT INTO individu (id,
                       statut,
                       user_image,
                       date_ceation)
-VALUES (1, 'Aliko', 'Dangote', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test.test@gmail.com',
+VALUES (1, 'Aliko', 'Dangote','alikod', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test.test@gmail.com',
         current_date, '0678787878', current_date, 2, 'active', null, null),
-       (2, 'Folrunsho', 'Alakija', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test2.test@gmail.com',
+       (2, 'Folrunsho', 'Alakija','folrunshoa', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test2.test@gmail.com',
         current_date, '0678787878', current_date, 3, 'active', null, null);
 
 
 create table users
 (
-    username varchar(50)       not null
-        primary key,
+    username varchar(50) primary key not null,
     password varchar(100)      not null,
-    enabled  tinyint default 1 not null,
-    id       bigint            not null
+    enabled  tinyint default 1 not null
 );
 
-insert into users(username, password, enabled, id)
-VALUES ('test.test@gmail.com', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1, 1),
-       ('test2.test@gmail.com', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1, 2);
+insert into users(username, password, enabled)
+VALUES ('alikod', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1),
+       ('folrunshoa', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1);
 
 
 create table authorities
 (
     username  varchar(50) not null,
     authority varchar(50) not null,
-    id        bigint      not null,
     constraint ix_auth_username
         unique (username, authority),
     constraint authorities_ibfk_1
         foreign key (username) references users (username)
 );
 
-insert into authorities(username, authority, id)
-VALUES ('test.test@gmail.com', 'ROLE_ADMIN', 1),
-       ('test2.test@gmail.com', 'ROLE_USER', 2);
+insert into authorities(username, authority)
+VALUES ('alikod', 'ROLE_ADMIN'),
+       ('folrunshoa', 'ROLE_USER');
 
 CREATE TABLE validationKeys
 (
@@ -86,10 +86,28 @@ CREATE TABLE validationKeys
 );
 
 insert into validationKeys(id, username, secret, creation_date, used)
-values (0001, 'test.test@gmail.com', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
-       (0002, 'test2.test@gmail.com', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
+values (0001, 'alikod', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
+       (0002, 'folrunshoa', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
 
-create table town
+CREATE TABLE events
+(
+    username varchar(50) not null,
+    datetime datetime not null ,
+    action_type varchar(50) not null,
+    action_raison varchar(100) ,
+    action_result varchar(16) not null,
+    browser_name varchar(50) not null,
+    os_name varchar(50) not null,
+    location varchar(50),
+    PRIMARY KEY (username, datetime)
+);
+
+insert into events(username, datetime, action_type, action_raison, action_result, browser_name, os_name, location)
+VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333'),
+        ('alikod', '2011-12-18 13:17:18', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333'),
+        ('alikod', '2011-12-18 13:17:19', 'AUTHENTICATION',null, 'OK', 'chrome', 'linux', '1.123#2.333');
+
+CREATE TABLE town
 (
     id   int primary key not null,
     name varchar(100)    not null

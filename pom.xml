@@ -11,6 +11,7 @@
     <modules>
         <module>individu</module>
         <module>notification</module>
+        <module>history</module>
     </modules>
 
     <parent>
