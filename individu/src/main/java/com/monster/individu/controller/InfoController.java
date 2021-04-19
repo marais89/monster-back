@@ -93,12 +93,6 @@ public class InfoController {
         return individuFacade.validateKey(username, validateKeyRequest);
     }
 
-    //TODO add request context to findLoggedUser
-    @RequestMapping("/loggedUser")
-    public UserDto findLoggedUser(@RequestBody LoginRequest infoLogin) {
-        return individuFacade.login(infoLogin);
-    }
-
     @RequestMapping("/user")
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization")

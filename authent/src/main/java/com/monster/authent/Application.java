@@ -1,4 +1,4 @@
-package com.monster.individu;
+package com.monster.authent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

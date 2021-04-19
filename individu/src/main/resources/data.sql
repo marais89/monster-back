@@ -99,13 +99,14 @@ CREATE TABLE events
     browser_name varchar(50) not null,
     os_name varchar(50) not null,
     location varchar(50),
+    channel varchar(20),
     PRIMARY KEY (username, datetime)
 );
 
-insert into events(username, datetime, action_type, action_raison, action_result, browser_name, os_name, location)
-VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333'),
-        ('alikod', '2011-12-18 13:17:18', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333'),
-        ('alikod', '2011-12-18 13:17:19', 'AUTHENTICATION',null, 'OK', 'chrome', 'linux', '1.123#2.333');
+insert into events(username, datetime, action_type, action_raison, action_result, browser_name, os_name, location, channel)
+VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
+        ('alikod', '2011-12-18 13:17:18', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
+        ('alikod', '2011-12-18 13:17:19', 'AUTHENTICATION',null, 'OK', 'chrome', 'linux', '1.123#2.333', 'client');
 
 CREATE TABLE town
 (

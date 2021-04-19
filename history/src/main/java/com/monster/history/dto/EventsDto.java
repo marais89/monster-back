@@ -12,4 +12,5 @@ public class EventsDto {
     public String browserName;
     public String osName;
     public String location;
+    public String channel;
 }

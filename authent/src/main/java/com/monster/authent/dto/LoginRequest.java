@@ -1,4 +1,4 @@
-package com.monster.individu.dto;
+package com.monster.authent.dto;
 
 import com.monster.history.dto.RequestContext;
 

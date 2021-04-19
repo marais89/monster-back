@@ -25,6 +25,8 @@ public class Events implements Serializable {
     private String osName;
     @Column(name = "location")
     private String location;
+    @Column(name = "channel")
+    private String channel;
 
 
     public EventPK getId() {
@@ -81,5 +83,13 @@ public class Events implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 }

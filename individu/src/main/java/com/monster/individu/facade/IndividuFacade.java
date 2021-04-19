@@ -14,11 +14,8 @@ import com.monster.notification.dto.MailDto;
 import com.monster.notification.service.MailService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Base64;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("JavaDoc")
@@ -66,7 +63,7 @@ public class IndividuFacade {
     public IndividuGlobalInfosDto findByUsername(String username) {
 
         IndividuDto individuDto = individusService.findByUsername(username);
-        EventsDto eventsDto = historyFacade.findLastAuthentication(ActionType.AUTHENTICATION.name(), ActionResult.OK.name());
+        EventsDto eventsDto = historyFacade.findLastAuthentication(username, ActionType.AUTHENTICATION.name(), ActionResult.OK.name());
         if (eventsDto != null) {
             individuDto.lastConnexion = eventsDto.datetime;
         }
@@ -177,40 +174,6 @@ public class IndividuFacade {
     public void delete(Long id) {
         //TODO return list of individus
         individusService.delete(id);
-    }
-
-    /**
-     * verify username and pwd
-     *
-     * @param loginRequest
-     * @return UserDto
-     */
-    public UserDto login(LoginRequest loginRequest) {
-        //TODO à améliorer
-        byte[] decodedBytes = Base64.getUrlDecoder().decode(loginRequest.loginInfos);
-        String decodedInfo = new String(decodedBytes);
-        String[] infos = decodedInfo.split(":");
-        EventsDto event = null;
-        if (StringUtils.isNotEmpty(infos[0]) && StringUtils.isNotEmpty(infos[1])) {
-            loginRequest.requestContext.username = infos[0];
-            event = historyFacade.saveHistory(loginRequest.requestContext, ActionType.AUTHENTICATION, ActionResult.INIT);
-
-            UserDto user = usersService.getUser(infos[0]);
-            if (user != null) {
-                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-                if (passwordEncoder.matches(infos[1], user.password)) {
-                    user.password = null;
-                    historyFacade.updateHistoryAfterSuccess(event);
-                    return user;
-                }
-            }
-        }
-        if (event != null) {
-            historyFacade.updateHistoryAfterFaild(event);
-        } else {
-            historyFacade.saveHistory(loginRequest.requestContext, ActionType.AUTHENTICATION, ActionResult.ERROR);
-        }
-        return null;
     }
 
     /**

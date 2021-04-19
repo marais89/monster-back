@@ -12,6 +12,7 @@ public enum ActionType {
     SUSPEND_USER,
     REACTIVATE_USER,
     DEACTIVATE_USER,
+    UPDATEPWD,
     UNKNOWN,
 
 }

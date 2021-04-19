@@ -1,7 +1,10 @@
-package com.monster.individu.configuration;
+package com.monster.authent.configuration;
 
+import com.monster.authent.facade.AuthEntryPointJwt;
+import com.monster.authent.facade.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -25,12 +29,21 @@ import javax.sql.DataSource;
         prePostEnabled = true,
         securedEnabled = true,
         jsr250Enabled = true)
+@EnableConfigurationProperties({TokenProperties.class})
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class BasicAuthConfiguration
         extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource datasource;
+
+    @Autowired
+    private AuthEntryPointJwt authEntryPointJwt;
+
+    @Bean
+    public AuthTokenFilter authenticationJwtTokenFilter() {
+        return new AuthTokenFilter();
+    }
 
     @Override
     protected void configure(HttpSecurity http)
@@ -43,7 +56,14 @@ public class BasicAuthConfiguration
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(authEntryPointJwt).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // Add a filter to validate the tokens with every request
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override
@@ -66,6 +86,4 @@ public class BasicAuthConfiguration
             }
         };
     }
-
-
 }

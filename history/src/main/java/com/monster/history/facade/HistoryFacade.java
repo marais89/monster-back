@@ -36,8 +36,14 @@ public class HistoryFacade {
         return historyService.saveHistory(eventsDto);
     }
 
-    public EventsDto findLastAuthentication(String actionType, String actionResult) {
-        return historyService.findLastAuthentication(actionType, actionResult);
+    public EventsDto findLastAuthentication(String username, String actionType, String actionResult) {
+        return historyService.findLastAuthentication(username, actionType, actionResult);
+    }
+
+    public long findFaieldConnetionNumberToday(String username) {
+        return historyService.findEventByUsernameAndActionTypeAndActionResultAndDate(username, ActionType.AUTHENTICATION.name(), ActionResult.ERROR.name(), LocalDateTime.now().minusDays(1))
+                .stream()
+                .count();
     }
 
     private EventsDto buildEvent(RequestContext request, ActionType type, ActionResult result) {

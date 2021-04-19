@@ -41,8 +41,8 @@ public class HistoryController {
 
     @RequestMapping(path = "/history/lastAuthentication/actionType/{actionType}/actionResult/{actionResult}", method = RequestMethod.GET)
     @ApiOperation(value = "retrieve last authentication")
-    EventsDto retriveHistoryByUserName(@PathVariable(ACTION_TYPE) String actionType, @PathVariable(ACTION_RESULT) String actionResult) {
-        return historyFacade.findLastAuthentication(actionType, actionResult);
+    EventsDto retriveHistoryByUserName(@PathVariable(USERNAME) String username, @PathVariable(ACTION_TYPE) String actionType, @PathVariable(ACTION_RESULT) String actionResult) {
+        return historyFacade.findLastAuthentication(username, actionType, actionResult);
     }
 
 }
