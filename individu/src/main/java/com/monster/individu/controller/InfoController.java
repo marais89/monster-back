@@ -22,6 +22,7 @@ import java.util.List;
 public class InfoController {
 
     public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
     public static final String NUMERO = "numero";
     public static final String ID = "id";
     public static final String GOUVERNORAT = "gouvernorat";
@@ -43,6 +44,12 @@ public class InfoController {
     @ApiOperation(value = "recupére les informations d'individu par son username")
     public IndividuGlobalInfosDto getByUsername(@PathVariable(USERNAME) String username) {
         return individuFacade.findByUsername(username);
+    }
+
+    @RequestMapping(path = "/individus/checkEmail", method = RequestMethod.POST)
+    @ApiOperation(value = "checker l'utilisateur par son email")
+    public CheckUserDto getByEmail(@RequestBody UpdateStatusRequest updateStatusRequest) {
+        return individuFacade.checkUserByEmail(updateStatusRequest);
     }
 
     @RequestMapping(path = "/individus/numeroTel/{numero}", method = RequestMethod.GET)

@@ -81,7 +81,7 @@ CREATE TABLE validationKeys
     id            int primary key   not null,
     username      varchar(50)       not null,
     secret        varchar(50)       not null,
-    creation_date date              not null,
+    creation_date TIMESTAMP         not null,
     used          tinyint default 0 not null
 );
 

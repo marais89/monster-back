@@ -1,8 +1,6 @@
 package com.monster.authent.controller;
 
-import com.monster.authent.dto.LoginRequest;
-import com.monster.authent.dto.LoginResponse;
-import com.monster.authent.dto.UpdatePwdDto;
+import com.monster.authent.dto.*;
 import com.monster.authent.facade.AuthentFacade;
 import com.monster.individu.dto.UserDto;
 import io.swagger.annotations.Api;
@@ -38,5 +36,11 @@ public class AuthentController {
     @ApiOperation(value = "Update user password")
     public UserDto updatePwd(@RequestBody UpdatePwdDto updatePwdDto) {
         return authentFacade.updatePwd(updatePwdDto);
+    }
+
+    @PostMapping("/updatePwdWithKey")
+    @ApiOperation(value = "Update user passwordin case forgotten pwd")
+    public UpdatePwdWithKeyResponse updatePwdWithKey(@RequestBody UpdatePwdWithKeyDto updatePwdWithKey) {
+        return authentFacade.updatePwdWithKey(updatePwdWithKey);
     }
 }

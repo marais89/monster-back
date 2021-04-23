@@ -52,7 +52,7 @@ public class BasicAuthConfiguration
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/loggedUser", "/individus/create").permitAll()
+                .antMatchers("/loggedUser", "/individus/create", "/updatePwdWithKey", "/individus/checkEmail").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -13,6 +13,8 @@ import com.monster.individu.service.ValidationKeysService;
 import com.monster.notification.dto.MailDto;
 import com.monster.notification.service.MailService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.List;
 @SuppressWarnings("JavaDoc")
 @Service
 public class IndividuFacade {
+
+    protected final Log logger = LogFactory.getLog(getClass());
 
     @Autowired
     private IndividusService individusService;
@@ -68,6 +72,42 @@ public class IndividuFacade {
             individuDto.lastConnexion = eventsDto.datetime;
         }
         return buildIndividuGlobalInfosDto(username, individuDto);
+    }
+
+    /**
+     * check user by email
+     *
+     * @param request
+     * @return IndividuGlobalInfosDto
+     */
+    public CheckUserDto checkUserByEmail(UpdateStatusRequest request) {
+
+        EventsDto saveUserEvent = historyFacade.saveHistory(request.requestContext, ActionType.CHECK_USER_FORGET_PWD, ActionResult.INIT);
+        IndividuDto individuDto = individusService.findByEmail(request.username);
+        if (individuDto != null) {
+            if (individuDto.statut.equals("bloque") || individuDto.statut.equals("resilie")) {
+                historyFacade.updateHistoryAfterFaild(saveUserEvent);
+                return buildFailedCheckUserResponse(CheckUserErrorType.BLOCKED_USER);
+            }
+            ValidationKeysDto validationKeysDto = validationKeysService.saveValidationKey(individuDto.username);
+
+            historyFacade.saveHistory(request.requestContext, ActionType.GENERATE_AND_SAVE_VALIDATION_KEY, ActionResult.OK);
+
+            try {
+                mailService.sendMail(buildForgetPwdMail(individuDto.email, validationKeysDto.secret));
+                historyFacade.saveHistory(request.requestContext, ActionType.SEND_FORGET_PWD_EMAIL, ActionResult.OK);
+            } catch (Exception ex) {
+                logger.error("Error when sending email", ex);
+                historyFacade.saveHistory(request.requestContext, ActionType.SEND_FORGET_PWD_EMAIL, ActionResult.ERROR);
+                historyFacade.updateHistoryAfterFaild(saveUserEvent);
+                return buildFailedCheckUserResponse(CheckUserErrorType.SEND_NOTIF_ERROR);
+            }
+
+            historyFacade.updateHistoryAfterSuccess(saveUserEvent);
+            return buildSucessCheckUserResponse();
+        }
+        historyFacade.updateHistoryAfterFaild(saveUserEvent);
+        return buildFailedCheckUserResponse(CheckUserErrorType.USER_NOT_FOUND);
     }
 
     /**
@@ -211,6 +251,21 @@ public class IndividuFacade {
         return mailDto;
     }
 
+    private MailDto buildForgetPwdMail(String to, String secret) {
+        //TODO externalize redirect adress
+        //TODO externalize e-mail content
+        String redirectionLink = "http://localhost:4200/login?key=" + secret;
+        MailDto mailDto = new MailDto();
+        mailDto.to = to;
+        mailDto.subject = "Mot de passe oublié";
+        mailDto.content = "<h3> Bonjour </h3> <p>Vous avez oublié votre mot de passe, et vous avez demandé de le changer.</p>" +
+                "<p>Cliquez  " +
+                "<a href=\'" + redirectionLink + "\'>ICI</a>" +
+                " pour pouvoir saisir un nouveau mot de passe, <p/>" +
+                "\n Bonne journée.";
+        return mailDto;
+    }
+
     private IndividuGlobalInfosDto buildIndividuGlobalInfosDto(String username, IndividuDto individuDto) {
         if (individuDto != null) {
             AuthoritiesDto authoritiesDto = authoritiesService.retrieveUserAutorities(username);
@@ -279,5 +334,18 @@ public class IndividuFacade {
         } else if (generateKeyEvent == null) {
             historyFacade.saveHistory(individuRequest.requestContext, ActionType.GENERATE_AND_SAVE_VALIDATION_KEY, ActionResult.ERROR);
         }
+    }
+
+    private CheckUserDto buildFailedCheckUserResponse(CheckUserErrorType error) {
+        CheckUserDto checkUser = new CheckUserDto();
+        checkUser.isValidUser = Boolean.FALSE;
+        checkUser.errorType = error;
+        return checkUser;
+    }
+
+    private CheckUserDto buildSucessCheckUserResponse() {
+        CheckUserDto checkUser = new CheckUserDto();
+        checkUser.isValidUser = Boolean.TRUE;
+        return checkUser;
     }
 }

@@ -1,8 +1,6 @@
 package com.monster.authent.facade;
 
-import com.monster.authent.dto.LoginRequest;
-import com.monster.authent.dto.LoginResponse;
-import com.monster.authent.dto.UpdatePwdDto;
+import com.monster.authent.dto.*;
 import com.monster.history.dto.ActionResult;
 import com.monster.history.dto.ActionType;
 import com.monster.history.dto.EventsDto;
@@ -11,14 +9,18 @@ import com.monster.history.facade.HistoryFacade;
 import com.monster.individu.dto.IndividuStatus;
 import com.monster.individu.dto.UpdateStatusRequest;
 import com.monster.individu.dto.UserDto;
+import com.monster.individu.dto.ValidationKeysDto;
 import com.monster.individu.facade.IndividuFacade;
 import com.monster.individu.service.UsersService;
+import com.monster.individu.service.ValidationKeysService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.GeneralSecurityException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 
 @Service
@@ -29,6 +31,9 @@ public class AuthentFacade {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    private ValidationKeysService validationKeysService;
 
     @Autowired
     IndividuFacade individuFacade;
@@ -85,6 +90,40 @@ public class AuthentFacade {
         }
         historyFacade.updateHistoryAfterFaild(event);
         return null;
+    }
+
+    public UpdatePwdWithKeyResponse updatePwdWithKey(UpdatePwdWithKeyDto updatePwdWithKey) {
+
+        ValidationKeysDto validationKeysDto = validationKeysService.getValidationKey(updatePwdWithKey.key);
+        if (verifyKey(validationKeysDto)) {
+            updatePwdWithKey.requestContext.username = validationKeysDto.username;
+            EventsDto event = historyFacade.saveHistory(updatePwdWithKey.requestContext, ActionType.UPDATEPWD_WITH_KEY, ActionResult.INIT);
+            UserDto user = usersService.getUser(validationKeysDto.username);
+            if (user != null) {
+                user.password = updatePwdWithKey.newPassword;
+                usersService.saveUser(user);
+                historyFacade.updateHistoryAfterSuccess(event);
+                validationKeysService.closeKey(validationKeysDto.username);
+                return buildUpdatePwdWithKeyResponse(ResponseType.OK);
+            }
+            historyFacade.updateHistoryAfterFaild(event);
+        }
+        return buildUpdatePwdWithKeyResponse(ResponseType.NOT_VALID_KEY);
+    }
+
+    private UpdatePwdWithKeyResponse buildUpdatePwdWithKeyResponse(ResponseType type) {
+        UpdatePwdWithKeyResponse updatePwdWithKeyResponse = new UpdatePwdWithKeyResponse();
+        updatePwdWithKeyResponse.response = type;
+        return updatePwdWithKeyResponse;
+    }
+
+    private boolean verifyKey(ValidationKeysDto validationKeysDto) {
+        LocalDateTime now = LocalDateTime.now();
+        return validationKeysDto != null
+                && StringUtils.isNotEmpty(validationKeysDto.secret)
+                && !validationKeysDto.used
+                && validationKeysDto.creation_date.isBefore(now)
+                && ChronoUnit.MINUTES.between(validationKeysDto.creation_date, now) < 10L;
     }
 
     private boolean isMatches(String password, String encodedPassword) {
