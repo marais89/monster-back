@@ -27,6 +27,12 @@ public class HistoryController {
     @Autowired
     private HistoryFacade historyFacade;
 
+    @RequestMapping(path = "/history/usernameFromHistories", method = RequestMethod.GET)
+    @ApiOperation(value = "retrieve all name of users from histories ")
+    List<String> findNameOfUsersFromHistories() {
+        return historyFacade.findNameOfUsersFromHistories();
+    }
+
     @RequestMapping(path = "/history/username/{username}", method = RequestMethod.GET)
     @ApiOperation(value = "retrieve histories by username")
     List<EventsDto> retriveHistoryByUserName(@PathVariable(USERNAME) String username) {

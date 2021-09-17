@@ -52,5 +52,10 @@ public class HistoryServiceImpl implements HistoryService {
                 .map(h -> historyMapper.mapToDto(h)).collect(Collectors.toList());
     }
 
+    @Override
+    public List<String> findNameOfUsersFromHistories() {
+        return historyRepository.findUsernamesForHistories();
+    }
+
 
 }

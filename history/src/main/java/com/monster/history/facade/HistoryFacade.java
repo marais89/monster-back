@@ -57,4 +57,8 @@ public class HistoryFacade {
         evt.actionResult = result.name();
         return evt;
     }
+
+    public List<String> findNameOfUsersFromHistories() {
+        return historyService.findNameOfUsersFromHistories();
+    }
 }

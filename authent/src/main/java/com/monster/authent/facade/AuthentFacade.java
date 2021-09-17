@@ -54,10 +54,11 @@ public class AuthentFacade {
         LoginResponse loginResponse = new LoginResponse();
         UserDto user = null;
         if (infos.length == 2 && StringUtils.isNotEmpty(infos[0]) && StringUtils.isNotEmpty(infos[1])) {
-            loginRequest.requestContext.username = infos[0];
+            String login = infos[0].strip();
+            loginRequest.requestContext.username = login;
             event = historyFacade.saveHistory(loginRequest.requestContext, ActionType.AUTHENTICATION, ActionResult.INIT);
 
-            user = usersService.getUser(infos[0]);
+            user = usersService.getUser(login);
             if (user != null && user.enabled) {
                 if (isMatches(infos[1], user.password)) {
                     historyFacade.updateHistoryAfterSuccess(event);

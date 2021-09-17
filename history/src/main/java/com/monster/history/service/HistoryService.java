@@ -14,4 +14,6 @@ public interface HistoryService {
     EventsDto findLastAuthentication(String username, String actionType, String actionResult);
 
     List<EventsDto> findEventByUsernameAndActionTypeAndActionResultAndDate(String username, String actionType, String actionResult, LocalDateTime datetime);
+
+    List<String> findNameOfUsersFromHistories();
 }
