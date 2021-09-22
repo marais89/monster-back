@@ -53,7 +53,7 @@ public class HistoryFacade {
         evt.browserName = request.browserName;
         evt.osName = request.osName;
         evt.location = request.location;
-        evt.datetime = LocalDateTime.now();
+        evt.datetime = LocalDateTime.now().withNano(0);
         evt.actionResult = result.name();
         return evt;
     }

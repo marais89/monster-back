@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface HistoryRepository extends CrudRepository<Events, EventPK> {
 
-    List<Events> findEventsHistoriesById_Username(String username);
+    List<Events> findEventsHistoriesById_UsernameOrderById_datetimeDesc(String username);
 
     List<Events> findEventsById_UsernameAndActionTypeEqualsAndActionResultEqualsOrderById_datetimeDesc(String username, String actionType, String actionResult);
 

@@ -25,7 +25,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public List<EventsDto> retriveHistoryByUserName(String username) {
-        return historyRepository.findEventsHistoriesById_Username(username).stream()
+        return historyRepository.findEventsHistoriesById_UsernameOrderById_datetimeDesc(username).stream()
                 .map(h -> historyMapper.mapToDto(h)).collect(Collectors.toList());
     }
 
