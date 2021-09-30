@@ -78,7 +78,7 @@ VALUES ('alikod', 'ROLE_ADMIN'),
 
 CREATE TABLE validationKeys
 (
-    id            int primary key   not null,
+    id            int primary key auto_increment not null,
     username      varchar(50)       not null,
     secret        varchar(50)       not null,
     creation_date TIMESTAMP         not null,
