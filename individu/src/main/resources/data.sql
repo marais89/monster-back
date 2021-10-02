@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS events;
 
 create table individu
 (
-    id             int   not null  primary key,
+    id             int   not null auto_increment primary key,
     nom            varchar(20) null,
     prenom         varchar(20) null,
     username       varchar(20) unique not null,
