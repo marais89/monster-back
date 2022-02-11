@@ -5,6 +5,7 @@ import com.monster.authent.facade.AuthentFacade;
 import com.monster.individu.dto.UserDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +34,7 @@ public class AuthentController {
     }
 
     @PostMapping("/updatePwd")
-    @ApiOperation(value = "Update user password")
+    @ApiOperation(value = "Update user password", authorizations = @Authorization("jwt"))
     public UserDto updatePwd(@RequestBody UpdatePwdDto updatePwdDto) {
         return authentFacade.updatePwd(updatePwdDto);
     }

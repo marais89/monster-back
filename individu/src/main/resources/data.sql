@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS adress;
 DROP TABLE IF EXISTS town;
 DROP TABLE IF EXISTS validationKeys;
 DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS business;
 
 create table individu
 (
@@ -49,6 +50,25 @@ VALUES (1, 'Aliko', 'Dangote','alikod', '9 rue maurice berteaux', 'BIZERTE', 'BI
        (2, 'Folrunsho', 'Alakija','folrunshoa', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test2.test@gmail.com',
         current_date, '0678787878', current_date, 3, 'active', null, null);
 
+create table business(
+    id  int primary key auto_increment not null,
+    name varchar(50) unique not null ,
+    descreption varchar(1000) not null,
+    creator_id int not null,
+    logo mediumblob ,
+    creation_date TIMESTAMP not null,
+    physical_address varchar(100) not null,
+    status varchar(20) not null,
+
+    constraint business_fk_1
+        foreign key (creator_id) references individu (id)
+
+);
+
+insert into business (id, name, descreption, creator_id, logo, creation_date, physical_address, status)
+VALUES (1, 'monster', 'this is a description toto', '1', null, current_timestamp, '11 avenu de la republique rueil malmaison', 'ACTIVE'),
+        (2, 'microsoft', 'this is a description toto', '2', null, current_timestamp, '11 lavaloit pirez du saichez villeneuf', 'SUSPEND');
+
 
 create table users
 (
@@ -86,8 +106,8 @@ CREATE TABLE validationKeys
 );
 
 insert into validationKeys(id, username, secret, creation_date, used)
-values (0001, 'alikod', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
-       (0002, 'folrunshoa', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
+values (00010, 'alikod', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
+       (00020, 'folrunshoa', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
 
 CREATE TABLE events
 (

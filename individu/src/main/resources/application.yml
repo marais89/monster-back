@@ -20,3 +20,7 @@ auth:
     public-key-location: 'classpath:auth-gateway.pub'
     issuer: 'monster-back'
     signing-key-type: 'RSA'
+
+logging:
+  level:
+    org.springframework.security: DEBUG

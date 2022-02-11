@@ -13,6 +13,7 @@
         <module>notification</module>
         <module>history</module>
         <module>authent</module>
+        <module>business</module>
     </modules>
 
     <parent>
