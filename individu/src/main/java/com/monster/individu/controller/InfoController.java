@@ -1,7 +1,6 @@
 package com.monster.individu.controller;
 
 import com.monster.individu.dto.*;
-import com.monster.individu.facade.AdressFacade;
 import com.monster.individu.facade.IndividuFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +16,7 @@ import java.util.Base64;
 import java.util.List;
 
 @Valid
-@Api(tags = "info Individus")
+@Api(tags = "Users Infos")
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class InfoController {
@@ -26,13 +25,9 @@ public class InfoController {
     public static final String EMAIL = "email";
     public static final String NUMERO = "numero";
     public static final String ID = "id";
-    public static final String GOUVERNORAT = "gouvernorat";
 
     @Autowired
     private IndividuFacade individuFacade;
-
-    @Autowired
-    private AdressFacade adressFacade;
 
     @RequestMapping(value = "/individus", method = RequestMethod.GET)
     @Secured("ROLE_ADMIN")
@@ -108,18 +103,6 @@ public class InfoController {
                 .substring("Basic".length()).trim();
         return () -> new String(Base64.getDecoder()
                 .decode(authToken)).split(":")[0];
-    }
-
-    @RequestMapping(path = "individus/adress/gouvernorat/{gouvernorat}", method = RequestMethod.GET)
-    @ApiOperation(value = "get adress", authorizations = @Authorization("jwt"))
-    public List<AdressDto> findAdressByGouvernorat(@PathVariable(GOUVERNORAT) int gouvernoratId) {
-        return adressFacade.findAdressByGouvernorat(gouvernoratId);
-    }
-
-    @RequestMapping(path = "individus/allTown", method = RequestMethod.GET)
-    @ApiOperation(value = "get all town", authorizations = @Authorization("jwt"))
-    public List<TownDto> findAllTown() {
-        return adressFacade.findAllTown();
     }
 
 }

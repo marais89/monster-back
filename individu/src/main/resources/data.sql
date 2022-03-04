@@ -1,178 +1,73 @@
 DROP TABLE IF EXISTS individu;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS authorities;
-DROP TABLE IF EXISTS adress;
-DROP TABLE IF EXISTS town;
 DROP TABLE IF EXISTS validationKeys;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS business;
+DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS governorate;
+DROP TABLE IF EXISTS address;
 
-create table individu
-(
-    id             int   not null auto_increment primary key,
-    nom            varchar(20) null,
-    prenom         varchar(20) null,
-    username       varchar(20) unique not null,
-    adresse        varchar(200) null,
-    gouvernorat    varchar(50) null,
-    ville          varchar(50) null,
-    cite           varchar(50) null,
-    code_postale   int(4) null,
-    email          varchar(100) unique not null,
-    date_naissance date null,
-    numero_tel     varchar(255) null,
-    date_creation  date null,
-    niveau         int default 0 not null,
-    statut         varchar(20) null,
-    user_image     mediumblob null,
-    date_ceation   date null
+CREATE TABLE country(
+    id int(8) primary key not null,
+    name varchar(100) not null,
+    active TINYINT not null
 );
 
-INSERT INTO individu (id,
-                      nom,
-                      prenom,
-                      username,
-                      adresse,
-                      gouvernorat,
-                      ville,
-                      cite,
-                      code_postale,
-                      email,
-                      date_naissance,
-                      numero_tel,
-                      date_creation,
-                      niveau,
-                      statut,
-                      user_image,
-                      date_ceation)
-VALUES (1, 'Aliko', 'Dangote','alikod', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test.test@gmail.com',
-        current_date, '0678787878', current_date, 2, 'active', null, null),
-       (2, 'Folrunsho', 'Alakija','folrunshoa', '9 rue maurice berteaux', 'BIZERTE', 'BIMBO', 'tata', 7000, 'test2.test@gmail.com',
-        current_date, '0678787878', current_date, 3, 'active', null, null);
+insert into country (id, name, active)
+VALUES (1, 'TUNISIA', 1),
+        (2, 'FRANCE', 1);
 
-create table business(
-    id  int primary key auto_increment not null,
-    name varchar(50) unique not null ,
-    descreption varchar(1000) not null,
-    creator_id int not null,
-    logo mediumblob ,
-    creation_date TIMESTAMP not null,
-    physical_address varchar(100) not null,
-    status varchar(20) not null,
-
-    constraint business_fk_1
-        foreign key (creator_id) references individu (id)
-
+CREATE TABLE governorate
+(
+    id   int(8) primary key not null,
+    name varchar(100)    not null,
+    country_id int(8) not null,
+     constraint country_ibfk_1
+        foreign key (country_id) references country (id),
+    constraint country_uni_1
+        unique (name, country_id)
 );
 
-insert into business (id, name, descreption, creator_id, logo, creation_date, physical_address, status)
-VALUES (1, 'monster', 'this is a description toto', '1', null, current_timestamp, '11 avenu de la republique rueil malmaison', 'ACTIVE'),
-        (2, 'microsoft', 'this is a description toto', '2', null, current_timestamp, '11 lavaloit pirez du saichez villeneuf', 'SUSPEND');
+insert into governorate (id, name, country_id)
+VALUES (1, 'TUNIS', 1),
+       (2, 'ARIANA', 1),
+       (3, 'BEJA', 1),
+       (4, 'BEN_AROUS', 1),
+       (5, 'BIZERTE', 1),
+       (6, 'GABES', 1),
+       (7, 'JENDOUBA', 1),
+       (8, 'KAIROUAN', 1),
+       (9, 'KASSERINE', 1),
+       (10, 'KEBILI', 1),
+       (11, 'KEF', 1),
+       (12, 'MAHDIA', 1),
+       (13, 'MANNOUBA', 1),
+       (14, 'MEDENINE', 1),
+       (15, 'MONASTIR', 1),
+       (16, 'NABEUL', 1),
+       (17, 'SFAX', 1),
+       (18, 'SIDI_BOUZID', 1),
+       (19, 'SILIANA', 1),
+       (20, 'SOUSSE', 1),
+       (21, 'TATAOUINE', 1),
+       (22, 'TOZEUR', 1),
+       (23, 'ZAGHOUAN', 1),
+       (24, 'GAFSA', 1);
 
 
-create table users
+CREATE TABLE address
 (
-    username varchar(50) primary key not null,
-    password varchar(100)      not null,
-    enabled  tinyint default 1 not null
-);
-
-insert into users(username, password, enabled)
-VALUES ('alikod', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1),
-       ('folrunshoa', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1);
-
-
-create table authorities
-(
-    username  varchar(50) not null,
-    authority varchar(50) not null,
-    constraint ix_auth_username
-        unique (username, authority),
-    constraint authorities_ibfk_1
-        foreign key (username) references users (username)
-);
-
-insert into authorities(username, authority)
-VALUES ('alikod', 'ROLE_ADMIN'),
-       ('folrunshoa', 'ROLE_USER');
-
-CREATE TABLE validationKeys
-(
-    id            int primary key auto_increment not null,
-    username      varchar(50)       not null,
-    secret        varchar(50)       not null,
-    creation_date TIMESTAMP         not null,
-    used          tinyint default 0 not null
-);
-
-insert into validationKeys(id, username, secret, creation_date, used)
-values (00010, 'alikod', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
-       (00020, 'folrunshoa', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
-
-CREATE TABLE events
-(
-    username varchar(50) not null,
-    datetime datetime not null ,
-    action_type varchar(50) not null,
-    action_raison varchar(100) ,
-    action_result varchar(16) not null,
-    browser_name varchar(50) not null,
-    os_name varchar(50) not null,
-    location varchar(50),
-    channel varchar(20),
-    PRIMARY KEY (username, datetime)
-);
-
-insert into events(username, datetime, action_type, action_raison, action_result, browser_name, os_name, location, channel)
-VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
-        ('alikod', '2011-12-18 13:17:18', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
-        ('alikod', '2011-12-18 13:17:19', 'AUTHENTICATION',null, 'OK', 'chrome', 'linux', '1.123#2.333', 'client');
-
-CREATE TABLE town
-(
-    id   int primary key not null,
-    name varchar(100)    not null
-);
-
-insert into town(id, name)
-VALUES (1, 'TUNIS'),
-       (2, 'ARIANA'),
-       (3, 'BEJA'),
-       (4, 'BEN_AROUS'),
-       (5, 'BIZERTE'),
-       (6, 'GABES'),
-       (7, 'JENDOUBA'),
-       (8, 'KAIROUAN'),
-       (9, 'KASSERINE'),
-       (10, 'KEBILI'),
-       (11, 'KEF'),
-       (12, 'MAHDIA'),
-       (13, 'MANNOUBA'),
-       (14, 'MEDENINE'),
-       (15, 'MONASTIR'),
-       (16, 'NABEUL'),
-       (17, 'SFAX'),
-       (18, 'SIDI_BOUZID'),
-       (19, 'SILIANA'),
-       (20, 'SOUSSE'),
-       (21, 'TATAOUINE'),
-       (22, 'TOZEUR'),
-       (23, 'ZAGHOUAN'),
-       (24, 'GAFSA');
-
-
-create table adress
-(
-    id      int primary key not null,
-    TOWN_ID int             not null,
-    ville   varchar(100)    not null,
-    cite    varchar(100)    not null,
+    id      int(8) primary key not null,
+    governorate_id int(8) not null,
+    town   varchar(100)    not null,
+    city    varchar(100)    not null,
     code    int(4) not null,
-    constraint adress_ibfk_1
-        foreign key (TOWN_ID) references town (id)
+    constraint address_ibfk_1
+        foreign key (governorate_id) references governorate (id)
 );
 
-insert into adress(id, TOWN_ID, ville, cite, code)
+insert into address(id, governorate_id, town, city, code)
 VALUES (0, 2, 'Ariana Ville', 'Centre Commercial Ikram', 2037),
        (1, 2, 'Ariana Ville', 'Residence Kortoba', 2058),
        (2, 2, 'Ariana Ville', 'Nouvelle Ariana', 2080),
@@ -5016,4 +4911,124 @@ VALUES (0, 2, 'Ariana Ville', 'Centre Commercial Ikram', 2037),
        (4824, 23, 'Zaghouan', 'Hemiane', 1100),
        (4825, 23, 'Zaghouan', 'Merkez Ali Besseghaier', 1100),
        (4826, 23, 'Zaghouan', 'Bni Mar', 1100);
+
+
+
+create table individu
+(
+    id             int(8)   not null auto_increment primary key,
+    nom            varchar(20) null,
+    prenom         varchar(20) null,
+    username       varchar(20) unique not null,
+    address_id int(8) null,
+    address_complement varchar(200) null,
+    email          varchar(100) unique not null,
+    date_naissance date null,
+    numero_tel     varchar(32) null,
+    date_creation  date null,
+    niveau         int default 0 not null,
+    status         varchar(20) null,
+    user_image     mediumblob null,
+    date_ceation   date null,
+    constraint individu_fk_1
+     foreign key (address_id) references address (id)
+);
+
+INSERT INTO individu (id,
+                      nom,
+                      prenom,
+                      username,
+                      address_id,
+                      address_complement,
+                      email,
+                      date_naissance,
+                      numero_tel,
+                      date_creation,
+                      niveau,
+                      status,
+                      user_image,
+                      date_ceation)
+VALUES (1, 'Aliko', 'Dangote','alikod', 1, 'complement adresse', 'test.test@gmail.com',
+        current_date, '0678787878', current_date, 2, 'active', null, null),
+       (2, 'Folrunsho', 'Alakija','folrunshoa', 1, 'complement adresse', 'test2.test@gmail.com',
+        current_date, '0678787878', current_date, 3, 'active', null, null);
+
+create table business(
+    id  int(8) primary key auto_increment not null,
+    name varchar(50) unique not null ,
+    descreption varchar(1000) not null,
+    creator_id int not null,
+    logo mediumblob ,
+    creation_date TIMESTAMP not null,
+    physical_address varchar(100) not null,
+    status varchar(20) not null,
+
+    constraint business_fk_1
+        foreign key (creator_id) references individu (id)
+
+);
+
+insert into business (id, name, descreption, creator_id, logo, creation_date, physical_address, status)
+VALUES (1, 'monster', 'this is a description toto', '1', null, current_timestamp, '11 avenu de la republique rueil malmaison', 'ACTIVE'),
+        (2, 'microsoft', 'this is a description toto', '2', null, current_timestamp, '11 lavaloit pirez du saichez villeneuf', 'SUSPEND');
+
+
+create table users
+(
+    username varchar(50) primary key not null,
+    password varchar(100)      not null,
+    enabled  tinyint default 1 not null
+);
+
+insert into users(username, password, enabled)
+VALUES ('alikod', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1),
+       ('folrunshoa', '$2a$10$8JqO51Q6SROyKrd.68fR2Oa4i.G/me1ro0FZQAP2c2M9dY7UJvO1C', 1);
+
+
+CREATE TABLE authorities
+(
+    username  varchar(50) not null,
+    authority varchar(50) not null,
+    constraint ix_auth_username
+        unique (username, authority),
+    constraint authorities_ibfk_1
+        foreign key (username) references users (username)
+);
+
+insert into authorities(username, authority)
+VALUES ('alikod', 'ROLE_ADMIN'),
+       ('folrunshoa', 'ROLE_USER');
+
+CREATE TABLE validationKeys
+(
+    id            int(8) primary key auto_increment not null,
+    username      varchar(50)       not null,
+    secret        varchar(50)       not null,
+    creation_date TIMESTAMP         not null,
+    used          tinyint default 0 not null
+);
+
+insert into validationKeys(id, username, secret, creation_date, used)
+values (00010, 'alikod', 'MONSTER%_31012021_18370188_12345678', current_date, 0),
+       (00020, 'folrunshoa', 'MONSTER%_31012021_18370188_23456789', current_date, 0);
+
+CREATE TABLE events
+(
+    username varchar(50) not null,
+    datetime datetime not null ,
+    action_type varchar(50) not null,
+    action_raison varchar(100) ,
+    action_result varchar(16) not null,
+    browser_name varchar(50) not null,
+    os_name varchar(50) not null,
+    location varchar(50),
+    channel varchar(20),
+    PRIMARY KEY (username, datetime)
+);
+
+insert into events(username, datetime, action_type, action_raison, action_result, browser_name, os_name, location, channel)
+VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
+        ('alikod', '2011-12-18 13:17:18', 'AUTHENTICATION',null, 'KO', 'chrome', 'linux', '1.123#2.333', 'client'),
+        ('alikod', '2011-12-18 13:17:19', 'AUTHENTICATION',null, 'OK', 'chrome', 'linux', '1.123#2.333', 'client');
+
 

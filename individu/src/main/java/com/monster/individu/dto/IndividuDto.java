@@ -1,5 +1,6 @@
 package com.monster.individu.dto;
 
+import com.monster.address.dto.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.NoArgsConstructor;
@@ -31,24 +32,12 @@ public class IndividuDto {
     public String username;
 
     @NotNull
-    @ApiModelProperty(example = "5 rue de la liberte paris", name = "adresse individu")
-    public String adresse;
+    @ApiModelProperty(example = "tototi", name = "adresse details")
+    public AddressDetailsDto addressDetails;
 
     @NotNull
-    @ApiModelProperty(example = "BIZERTE", name = "gouvernorat")
-    public String gouvernorat;
-
-    @NotNull
-    @ApiModelProperty(example = "Jarzouna", name = "cite")
-    public String cite;
-
-    @NotNull
-    @ApiModelProperty(example = "Tunis", name = "ville de l'individu")
-    public String ville;
-
-    @NotNull
-    @ApiModelProperty(example = "7001", name = "code postale de l'individu")
-    public int code_postale;
+    @ApiModelProperty(example = "tototi", name = "complément d'adresse")
+    public String addressComplement;
 
     @NotNull
     @ApiModelProperty(example = "2011-07-14", name = "date de naissance de l'individu")
@@ -72,7 +61,7 @@ public class IndividuDto {
 
     @NotNull
     @ApiModelProperty(example = "active", name = "statut de l'individu")
-    public String statut;
+    public String status;
 
     @NotNull
     @ApiModelProperty(example = "$2y$zejkmjzenfiben456#", name = "mot de passe de l'individu  crypté")

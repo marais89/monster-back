@@ -85,7 +85,7 @@ public class IndividuFacade {
         EventsDto saveUserEvent = historyFacade.saveHistory(request.requestContext, ActionType.CHECK_USER_FORGET_PWD, ActionResult.INIT);
         IndividuDto individuDto = individusService.findByEmail(request.username);
         if (individuDto != null) {
-            if (individuDto.statut.equals("bloque") || individuDto.statut.equals("resilie")) {
+            if (individuDto.status.equals("bloque") || individuDto.status.equals("resilie")) {
                 historyFacade.updateHistoryAfterFaild(saveUserEvent);
                 return buildFailedCheckUserResponse(CheckUserErrorType.BLOCKED_USER);
             }
@@ -197,7 +197,7 @@ public class IndividuFacade {
         IndividuDto individu = individusService.findByUsername(username);
         UserDto userDto = updateUser(username, status);
         if (individu != null && userDto != null) {
-            individu.statut = status.libelle;
+            individu.status = status.libelle;
             individusService.saveOrUpdate(individu);
             historyFacade.updateHistoryAfterSuccess(updateUserEvent);
             return individusService.findAll();
@@ -237,7 +237,7 @@ public class IndividuFacade {
     }
 
     private MailDto buildWelcomeMail(String to, String secret) {
-        //TODO externalize redirect adress
+        //TODO externalize redirect address
         //TODO externalize e-mail content
         String redirectionLink = "http://localhost:4200?key=" + secret;
         MailDto mailDto = new MailDto();
@@ -252,7 +252,7 @@ public class IndividuFacade {
     }
 
     private MailDto buildForgetPwdMail(String to, String secret) {
-        //TODO externalize redirect adress
+        //TODO externalize redirect address
         //TODO externalize e-mail content
         String redirectionLink = "http://localhost:4200/login?key=" + secret;
         MailDto mailDto = new MailDto();
@@ -293,7 +293,7 @@ public class IndividuFacade {
 
     private void updateIndividuStatus(String username) {
         IndividuDto individuDto = individusService.findByUsername(username);
-        individuDto.statut = IndividuStatus.ACTIVE.libelle;
+        individuDto.status = IndividuStatus.ACTIVE.libelle;
         individuDto.niveau = 1;
         individusService.saveOrUpdate(individuDto);
     }

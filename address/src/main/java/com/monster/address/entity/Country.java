@@ -1,17 +1,21 @@
-package com.monster.individu.entity;
+package com.monster.address.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "town")
-public class Town implements Serializable {
+@Table(name = "country")
+public class Country implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String name;
+
+    private boolean active;
+
 
     public int getId() {
         return id;
@@ -27,5 +31,13 @@ public class Town implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

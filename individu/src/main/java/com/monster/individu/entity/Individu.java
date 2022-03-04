@@ -1,5 +1,7 @@
 package com.monster.individu.entity;
 
+import com.monster.address.entity.Address;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -18,15 +20,13 @@ public class Individu implements Serializable {
 
     private String username;
 
-    private String adresse;
+    private int ADDRESS_ID;
 
-    private String gouvernorat;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(insertable = false, updatable = false)
+    private Address address;
 
-    private String ville;
-
-    private String cite;
-
-    private int code_postale;
+    private String addressComplement;
 
     private String email;
 
@@ -38,7 +38,7 @@ public class Individu implements Serializable {
 
     private int niveau;
 
-    private String statut;
+    private String status;
 
     private byte[] user_image;
 
@@ -73,46 +73,6 @@ public class Individu implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getGouvernorat() {
-        return gouvernorat;
-    }
-
-    public void setGouvernorat(String gouvernorat) {
-        this.gouvernorat = gouvernorat;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
-    }
-
-    public String getCite() {
-        return cite;
-    }
-
-    public void setCite(String cite) {
-        this.cite = cite;
-    }
-
-    public int getCode_postale() {
-        return code_postale;
-    }
-
-    public void setCode_postale(int code_postale) {
-        this.code_postale = code_postale;
     }
 
     public String getEmail() {
@@ -155,12 +115,12 @@ public class Individu implements Serializable {
         this.niveau = niveau;
     }
 
-    public String getStatut() {
-        return statut;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setStatus(String statut) {
+        this.status = statut;
     }
 
     public byte[] getUser_image() {
@@ -169,5 +129,29 @@ public class Individu implements Serializable {
 
     public void setUser_image(byte[] user_image) {
         this.user_image = user_image;
+    }
+
+    public int getADDRESS_ID() {
+        return ADDRESS_ID;
+    }
+
+    public void setADDRESS_ID(int ADDRESS_ID) {
+        this.ADDRESS_ID = ADDRESS_ID;
+    }
+
+    public Address getAddressDetails() {
+        return address;
+    }
+
+    public void setAddressDetails(Address address) {
+        this.address = address;
+    }
+
+    public String getAddressComplement() {
+        return addressComplement;
+    }
+
+    public void setAddressComplement(String addressComplement) {
+        this.addressComplement = addressComplement;
     }
 }

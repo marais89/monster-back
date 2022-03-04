@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @ComponentScan({"com.monster.*"})
-@EnableJpaRepositories({"com.monster.history.repository", "com.monster.individu.repository", "com.monster.business.repository"})
+@EnableJpaRepositories({"com.monster.history.repository", "com.monster.individu.repository", "com.monster.business.repository", "com.monster.address.repository"})
 @EntityScan({"com.monster.*"})
 @EnableSwagger2
 public class Application {
