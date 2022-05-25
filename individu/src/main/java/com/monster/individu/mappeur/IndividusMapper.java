@@ -21,6 +21,7 @@ public interface IndividusMapper {
     IndividuDto mapToDto(Individu individu);
 
     @Mapping(source = "user_image", target = "user_image", qualifiedByName = "compress")
+    @Mapping(source = "addressDetails.id", target = "ADDRESS_ID")
     Individu mapToEntity(IndividuDto individuDto);
 
     @Named("compress")
