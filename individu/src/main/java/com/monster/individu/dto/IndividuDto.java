@@ -3,7 +3,6 @@ package com.monster.individu.dto;
 import com.monster.address.dto.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @ApiModel
-@NoArgsConstructor
 public class IndividuDto {
 
     private static int increment = 1;

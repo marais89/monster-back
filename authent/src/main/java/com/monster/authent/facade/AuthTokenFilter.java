@@ -4,7 +4,6 @@ import com.monster.individu.dto.AuthoritiesDto;
 import com.monster.individu.dto.UserDto;
 import com.monster.individu.service.AuthoritiesService;
 import com.monster.individu.service.UsersService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-@Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired

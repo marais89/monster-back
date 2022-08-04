@@ -13,11 +13,12 @@ spring.datasource.password: password
 spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
 # JWT properties
+#add public private keys from drive to authent/src/main/resources
 auth:
   jwt:
     token_alive: PT30M
-    private-key-location: 'classpath:auth-gateway.key'
-    public-key-location: 'classpath:auth-gateway.pub'
+    private-key-location: 'classpath:jwtRS256.key'
+    public-key-location: 'classpath:jwtRS256.key.pub'
     issuer: 'monster-back'
     signing-key-type: 'RSA'
 

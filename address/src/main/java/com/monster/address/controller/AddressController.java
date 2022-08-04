@@ -29,13 +29,13 @@ public class AddressController {
 
     @RequestMapping(path = "/address/gouvernorat/{gouvernorat}", method = RequestMethod.GET)
     @ApiOperation(value = "get address by gouvernorat id", authorizations = @Authorization("jwt"))
-    public List<AddressDetailsDto> findAdressByGouvernorat(@PathVariable(GOUVERNORAT) int gouvernoratId) {
+    public List<AddressDetailsDto> findAdressByGouvernorat(@PathVariable(GOUVERNORAT) Integer gouvernoratId) {
         return addressFacade.findAdressByGouvernorat(gouvernoratId);
     }
 
     @RequestMapping(path = "/governorates/country/{country}", method = RequestMethod.GET)
     @ApiOperation(value = "get town by country id", authorizations = @Authorization("jwt"))
-    public List<GovernorateDto> findGovernorateByCountryId(@PathVariable("country") int country) {
+    public List<GovernorateDto> findGovernorateByCountryId(@PathVariable("country") Integer country) {
         return addressFacade.findGovernorateByCountryId(country);
     }
 

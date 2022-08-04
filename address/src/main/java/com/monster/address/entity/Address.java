@@ -9,9 +9,9 @@ public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
-    private int GOVERNORATE_ID;
+    private Integer GOVERNORATE_ID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(insertable = false, updatable = false)
@@ -21,21 +21,21 @@ public class Address implements Serializable {
 
     private String city;
 
-    private int code;
+    private Integer code;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getGOVERNORATE_ID() {
+    public Integer getGOVERNORATE_ID() {
         return GOVERNORATE_ID;
     }
 
-    public void setGOVERNORATE_ID(int GOVERNORATE_ID) {
+    public void setGOVERNORATE_ID(Integer GOVERNORATE_ID) {
         this.GOVERNORATE_ID = GOVERNORATE_ID;
     }
 
@@ -63,11 +63,11 @@ public class Address implements Serializable {
         this.city = city;
     }
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 }

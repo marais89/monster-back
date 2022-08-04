@@ -9,21 +9,21 @@ public class Governorate implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     private String name;
 
-    private int COUNTRY_ID;
+    private Integer COUNTRY_ID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(insertable = false, updatable = false)
     private Country country;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -35,11 +35,11 @@ public class Governorate implements Serializable {
         this.name = name;
     }
 
-    public int getCOUNTRY_ID() {
+    public Integer getCOUNTRY_ID() {
         return COUNTRY_ID;
     }
 
-    public void setCOUNTRY_ID(int COUNTRY_ID) {
+    public void setCOUNTRY_ID(Integer COUNTRY_ID) {
         this.COUNTRY_ID = COUNTRY_ID;
     }
 

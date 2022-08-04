@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface AddressService {
 
-    List<AddressDetailsDto> findAdressByGovernoratId(int gouvernoratId);
+    List<AddressDetailsDto> findAdressByGovernoratId(Integer gouvernoratId);
 
-    List<GovernorateDto> findGovernorateByCountryId(int country);
+    List<GovernorateDto> findGovernorateByCountryId(Integer country);
 
     List<CountryDto> retrieveAllCountries();
 }

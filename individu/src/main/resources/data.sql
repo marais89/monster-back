@@ -4,9 +4,9 @@ DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS validationKeys;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS business;
-DROP TABLE IF EXISTS country;
-DROP TABLE IF EXISTS governorate;
 DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS governorate;
+DROP TABLE IF EXISTS country;
 
 CREATE TABLE country(
     id int(8) primary key not null,

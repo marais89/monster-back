@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface AddressDetailsRepository extends CrudRepository<Address, Integer> {
 
-    List<Address> findByGovernorate_Id(int gouvernoratId);
+    List<Address> findByGovernorate_Id(Integer gouvernoratId);
 }

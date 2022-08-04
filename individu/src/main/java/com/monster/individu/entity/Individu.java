@@ -20,7 +20,7 @@ public class Individu implements Serializable {
 
     private String username;
 
-    private int ADDRESS_ID;
+    private Integer ADDRESS_ID;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(insertable = false, updatable = false)
@@ -131,11 +131,11 @@ public class Individu implements Serializable {
         this.user_image = user_image;
     }
 
-    public int getADDRESS_ID() {
+    public Integer getADDRESS_ID() {
         return ADDRESS_ID;
     }
 
-    public void setADDRESS_ID(int ADDRESS_ID) {
+    public void setADDRESS_ID(Integer ADDRESS_ID) {
         this.ADDRESS_ID = ADDRESS_ID;
     }
 

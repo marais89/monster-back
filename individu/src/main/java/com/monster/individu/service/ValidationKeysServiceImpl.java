@@ -4,7 +4,6 @@ import com.monster.individu.dto.ValidationKeysDto;
 import com.monster.individu.entity.ValidationKeys;
 import com.monster.individu.mappeur.ValidationKeysMapper;
 import com.monster.individu.repository.ValidationKeysRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 
 
 @Service
-@RequiredArgsConstructor
 public class ValidationKeysServiceImpl implements ValidationKeysService {
 
     @Autowired

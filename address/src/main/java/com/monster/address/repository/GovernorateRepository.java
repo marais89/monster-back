@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface GovernorateRepository extends CrudRepository<Governorate, Integer> {
 
-    List<Governorate> findByCountry_Id(int country);
+    List<Governorate> findByCountry_Id(Integer country);
 }

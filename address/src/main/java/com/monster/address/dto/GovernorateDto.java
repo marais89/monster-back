@@ -2,7 +2,7 @@ package com.monster.address.dto;
 
 public class GovernorateDto {
 
-    public int id;
+    public Integer id;
 
     public String name;
 

@@ -4,7 +4,6 @@ import com.monster.history.dto.EventsDto;
 import com.monster.history.entity.Events;
 import com.monster.history.mapper.HistoryMapper;
 import com.monster.history.repository.HistoryRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@RequiredArgsConstructor
 public class HistoryServiceImpl implements HistoryService {
 
     @Autowired

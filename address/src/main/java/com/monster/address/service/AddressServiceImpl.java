@@ -10,7 +10,6 @@ import com.monster.address.mappeur.GovernorateMapper;
 import com.monster.address.repository.AddressDetailsRepository;
 import com.monster.address.repository.CountryRepository;
 import com.monster.address.repository.GovernorateRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
     @Autowired
@@ -41,7 +39,7 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper;
 
     @Override
-    public List<AddressDetailsDto> findAdressByGovernoratId(int governoratId) {
+    public List<AddressDetailsDto> findAdressByGovernoratId(Integer governoratId) {
 
         return addressDetailsrepository.findByGovernorate_Id(governoratId)
                 .stream()
@@ -50,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<GovernorateDto> findGovernorateByCountryId(int countryId) {
+    public List<GovernorateDto> findGovernorateByCountryId(Integer countryId) {
 
         return governorateRepository.findByCountry_Id(countryId)
                 .stream()

@@ -8,7 +8,6 @@ import com.monster.individu.mappeur.IndividusMapper;
 import com.monster.individu.repository.AuthoritiesRepository;
 import com.monster.individu.repository.IndividuRepository;
 import com.monster.individu.repository.UsersRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class IndividusServiceImpl implements IndividusService {
 
 

@@ -2,7 +2,6 @@ package com.monster.notification.service;
 
 
 import com.monster.notification.dto.MailDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,7 +11,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-@RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
 
     @Autowired

@@ -1,19 +1,19 @@
 package com.monster.individu.controller;
 
+import java.security.Principal;
+import java.util.Base64;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import com.monster.individu.dto.*;
 import com.monster.individu.facade.IndividuFacade;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.security.Principal;
-import java.util.Base64;
-import java.util.List;
 
 @Valid
 @Api(tags = "Users Infos")
@@ -96,7 +96,7 @@ public class InfoController {
         return individuFacade.validateKey(username, validateKeyRequest);
     }
 
-    //Verify endpoint security
+    //TODO verfy security !!important!!
     @RequestMapping("/user")
     public Principal user(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization")

@@ -15,11 +15,11 @@ public class AddressFacade {
     @Autowired
     private AddressService addressService;
 
-    public List<AddressDetailsDto> findAdressByGouvernorat(int gouvernoratId) {
+    public List<AddressDetailsDto> findAdressByGouvernorat(Integer gouvernoratId) {
         return addressService.findAdressByGovernoratId(gouvernoratId);
     }
 
-    public List<GovernorateDto> findGovernorateByCountryId(int country) {
+    public List<GovernorateDto> findGovernorateByCountryId(Integer country) {
         return addressService.findGovernorateByCountryId(country);
     }
 

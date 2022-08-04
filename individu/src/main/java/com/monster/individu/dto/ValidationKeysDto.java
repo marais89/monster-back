@@ -2,13 +2,11 @@ package com.monster.individu.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @ApiModel
-@NoArgsConstructor
 public class ValidationKeysDto {
 
     public int id;
