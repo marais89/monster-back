@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class HistoryServiceImpl implements HistoryService {
+public class HistoryServiceImpl implements  HistoryService {
 
     @Autowired
     private HistoryMapper historyMapper;
@@ -54,7 +54,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public List<String> findNameOfUsersFromHistories() {
-        return historyRepository.findUsernamesForHistories();
+        return historyRepository.findDistinctByUsername();
     }
 
 

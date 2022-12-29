@@ -1,9 +1,11 @@
 package com.monster.individu.dto;
 
-import com.monster.address.dto.*;
+//import com.monster.address.dto.*;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -14,10 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class IndividuDto {
 
-    private static int increment = 1;
+    private static final int increment = 1;
 
     @ApiModelProperty(example = "0", name = "identifiant individu")
-    public long id;
+    public ObjectId id;
 
     @NotNull
     @ApiModelProperty(example = "toto", name = "nom individu")
@@ -31,9 +33,9 @@ public class IndividuDto {
     @ApiModelProperty(example = "tototi", name = "username/login de l'individu")
     public String username;
 
-    @NotNull
+  /*  @NotNull
     @ApiModelProperty(example = "tototi", name = "adresse details")
-    public AddressDetailsDto addressDetails;
+    public AddressDetailsDto addressDetails;*/
 
     @NotNull
     @ApiModelProperty(example = "tototi", name = "complément d'adresse")

@@ -82,7 +82,7 @@ public class TokenProperties {
     }
 
     private String jtiGenerator() {
-        return UUID.randomUUID().toString() + "-" + UUID.randomUUID().toString();
+        return UUID.randomUUID() + "-" + UUID.randomUUID();
     }
 
     public Duration getTokenAlive() {

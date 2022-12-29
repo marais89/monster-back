@@ -22,7 +22,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -34,9 +33,6 @@ import javax.sql.DataSource;
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class BasicAuthConfiguration
         extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    DataSource datasource;
 
     @Autowired
     private AuthEntryPointJwt authEntryPointJwt;
@@ -75,11 +71,6 @@ public class BasicAuthConfiguration
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**");
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(datasource);
     }
 
     @Bean

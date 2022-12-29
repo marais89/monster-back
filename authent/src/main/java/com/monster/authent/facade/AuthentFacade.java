@@ -64,7 +64,6 @@ public class AuthentFacade {
                     historyFacade.updateHistoryAfterSuccess(event);
                     return buildResponseWithJWTToken(loginResponse, loginRequest, user);
                 }
-
                 if (historyFacade.findFaieldConnetionNumberToday(infos[0]) > 3) {
                     individuFacade.updateIndividuStatus(user.username, IndividuStatus.BLOQUE, buildSystemUpdateStatus(user.username));
                 }

@@ -1,5 +1,6 @@
 package com.monster.authent.dto;
 
+
 import com.monster.history.dto.RequestContext;
 
 import javax.validation.constraints.NotNull;

@@ -1,18 +1,18 @@
 package com.monster.individu.entity;
 
-import com.monster.address.entity.Address;
+import org.bson.types.Binary;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "individu")
+@Document(collection ="individu")
 public class Individu implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private ObjectId id;
 
     private String nom;
 
@@ -20,12 +20,7 @@ public class Individu implements Serializable {
 
     private String username;
 
-    private int ADDRESS_ID;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(insertable = false, updatable = false)
-    private Address address;
-
+    private int address_id;
     private String addressComplement;
 
     private String email;
@@ -40,15 +35,23 @@ public class Individu implements Serializable {
 
     private String status;
 
-    private byte[] user_image;
+    private Binary user_image;
 
 
-    public Long getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public int getAddress_id() {
+        return address_id;
+    }
+
+    public void setAddress_id(int address_id) {
+        this.address_id = address_id;
     }
 
     public String getNom() {
@@ -123,28 +126,12 @@ public class Individu implements Serializable {
         this.status = statut;
     }
 
-    public byte[] getUser_image() {
+    public Binary getUser_image() {
         return user_image;
     }
 
-    public void setUser_image(byte[] user_image) {
+    public void setUser_image(Binary user_image) {
         this.user_image = user_image;
-    }
-
-    public int getADDRESS_ID() {
-        return ADDRESS_ID;
-    }
-
-    public void setADDRESS_ID(int ADDRESS_ID) {
-        this.ADDRESS_ID = ADDRESS_ID;
-    }
-
-    public Address getAddressDetails() {
-        return address;
-    }
-
-    public void setAddressDetails(Address address) {
-        this.address = address;
     }
 
     public String getAddressComplement() {

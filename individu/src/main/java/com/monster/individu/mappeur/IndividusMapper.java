@@ -3,6 +3,7 @@ package com.monster.individu.mappeur;
 import com.monster.individu.dto.IndividuDto;
 import com.monster.individu.entity.Individu;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.bson.types.Binary;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -24,7 +25,7 @@ public interface IndividusMapper {
     Individu mapToEntity(IndividuDto individuDto);
 
     @Named("compress")
-    static byte[] compress(byte[] content) {
+    static Binary compress(byte[] content) {
         if (content == null) {
             return null;
         }
@@ -36,17 +37,17 @@ public interface IndividusMapper {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return byteArrayOutputStream.toByteArray();
+        return new Binary(byteArrayOutputStream.toByteArray());
     }
 
     @Named("decompress")
-    static byte[] decompress(byte[] contentBytes) {
+    static byte[] decompress(Binary contentBytes) {
         if (contentBytes == null) {
             return null;
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            IOUtils.copy(new GZIPInputStream(new ByteArrayInputStream(contentBytes)), out);
+            IOUtils.copy(new GZIPInputStream(new ByteArrayInputStream(contentBytes.getData())), out);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

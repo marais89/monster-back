@@ -35,9 +35,9 @@ public class IndividusServiceImpl implements IndividusService {
 
     @Override
     public void saveNewUser(IndividuDto individuDto) {
-        individuRepository.save(individusMapper.mapToEntity(individuDto));
-        usersRepository.save(buildUser(individuDto));
-        authoritiesRepository.save(buildAuthorities(individuDto));
+        individuRepository.insert(individusMapper.mapToEntity(individuDto));
+        usersRepository.insert(buildUser(individuDto));
+        authoritiesRepository.insert(buildAuthorities(individuDto));
     }
 
     @Override

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
-    @Autowired
+  /*  @Autowired
     private AddressDetailsRepository addressDetailsrepository;
 
     @Autowired
@@ -30,7 +30,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private CountryRepository countryRepository;
-
+*/
     @Autowired
     private CountryMapper countryMapper;
 
@@ -43,27 +43,19 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public List<AddressDetailsDto> findAdressByGovernoratId(int governoratId) {
 
-        return addressDetailsrepository.findByGovernorate_Id(governoratId)
-                .stream()
-                .map(adr -> addressMapper.mapToDto(adr))
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
     public List<GovernorateDto> findGovernorateByCountryId(int countryId) {
 
-        return governorateRepository.findByCountry_Id(countryId)
-                .stream()
-                .map(governorateMapper::mapToDto)
-                .collect(Collectors.toList());
+        return null;
 
     }
 
     @Override
     public List<CountryDto> retrieveAllCountries() {
 
-        List<CountryDto> countryDtoList = new ArrayList<>();
-        countryRepository.findAll().forEach(c -> countryDtoList.add(countryMapper.mapToDto(c)));
-        return countryDtoList;
+       return null;
     }
 }

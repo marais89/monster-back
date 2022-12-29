@@ -3,6 +3,7 @@ package com.monster.individu.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ValidationKeysDto {
 
-    public int id;
+    public ObjectId id;
 
     @NotNull
     @ApiModelProperty(example = "toto@toto.com", name = "l'adresse email de l'utilisateur")

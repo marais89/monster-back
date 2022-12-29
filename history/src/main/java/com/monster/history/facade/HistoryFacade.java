@@ -2,9 +2,9 @@ package com.monster.history.facade;
 
 import com.monster.history.dto.ActionResult;
 import com.monster.history.dto.ActionType;
-import com.monster.history.dto.EventsDto;
 import com.monster.history.dto.RequestContext;
 import com.monster.history.service.HistoryService;
+import com.monster.history.dto.EventsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

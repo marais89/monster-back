@@ -1,23 +1,32 @@
-spring.jpa.hibernate.ddl-auto: update
-#spring.datasource.url: jdbc:mysql://localhost:3306/individu
-#spring.datasource.username: dali1
-#spring.datasource.password: password123
-#spring.jpa.properties.hibernate.dialect:  org.hibernate.dialect.MySQL5Dialect
-spring.jpa.show-sql: true
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://monster:1813120489d@cluster0.zlay7wj.mongodb.net/?retryWrites=true&w=majority
+      database: monster
+      option:
+        socket:
+          connectTimeout: 10000
+          readTimeout: 5000
+        pool:
+          maxPoolSize: 80
+          minPoolSize: 10
+          maxWaitTime: 10000
+          maxConnectionLifeTime: 600000
+          maxConnectionIdleTime: 60000
 
 #H2 database
-spring.datasource.url: jdbc:h2:mem:monster
-spring.datasource.driverClassName: org.h2.Driver
-spring.datasource.username: sa
-spring.datasource.password: password
-spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+#spring.datasource.url: jdbc:h2:mem:monster
+#spring.datasource.driverClassName: org.h2.Driver
+#spring.datasource.username: sa
+#spring.datasource.password: password
+#spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 
 # JWT properties
 auth:
   jwt:
     token_alive: PT30M
-    private-key-location: 'classpath:auth-gateway.key'
-    public-key-location: 'classpath:auth-gateway.pub'
+    private-key-location: 'classpath:jwtRS256.key'
+    public-key-location: 'classpath:jwtRS256.pub'
     issuer: 'monster-back'
     signing-key-type: 'RSA'
 

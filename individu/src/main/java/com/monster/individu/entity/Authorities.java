@@ -1,14 +1,17 @@
 package com.monster.individu.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "authorities")
+
+
+@Document(collection ="authorities")
 public class Authorities {
 
     @Id
+    private ObjectId id;
+
     private String username;
 
     private String authority;

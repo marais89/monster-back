@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface AddressDetailsRepository extends CrudRepository<Address, Integer> {
+
+public interface AddressDetailsRepository  {
 
     List<Address> findByGovernorate_Id(int gouvernoratId);
 }

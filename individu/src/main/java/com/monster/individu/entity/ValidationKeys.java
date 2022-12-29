@@ -1,16 +1,17 @@
 package com.monster.individu.entity;
 
-import javax.persistence.*;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "validationkeys")
+@Document(collection ="validationkeys")
 public class ValidationKeys implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private ObjectId id;
 
     private String username;
 
@@ -20,11 +21,11 @@ public class ValidationKeys implements Serializable {
 
     private boolean used;
 
-    public int getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

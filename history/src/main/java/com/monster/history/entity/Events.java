@@ -1,40 +1,60 @@
 package com.monster.history.entity;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.io.Serializable;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "events")
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+
+@Document(collection = "events")
 public class Events implements Serializable {
 
-    @EmbeddedId
-    private EventPK id;
+    @Id
+    private ObjectId id;
 
-    @Column(name = "ACTION_TYPE")
+    private String username;
+
+    private LocalDateTime datetime;
+
+
     private String actionType;
-    @Column(name = "action_raison")
+
     private String actionRaison;
-    @Column(name = "action_result")
+
     private String actionResult;
-    @Column(name = "browser_name")
+
     private String browserName;
-    @Column(name = "os_name")
+
     private String osName;
-    @Column(name = "location")
+
     private String location;
-    @Column(name = "channel")
+
     private String channel;
 
-
-    public EventPK getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(EventPK id) {
+    public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(LocalDateTime datetime) {
+        this.datetime = datetime;
     }
 
     public String getActionType() {
@@ -49,32 +69,32 @@ public class Events implements Serializable {
         return actionRaison;
     }
 
-    public void setActionRaison(String action_raison) {
-        this.actionRaison = action_raison;
+    public void setActionRaison(String actionRaison) {
+        this.actionRaison = actionRaison;
     }
 
     public String getActionResult() {
         return actionResult;
     }
 
-    public void setActionResult(String action_result) {
-        this.actionResult = action_result;
+    public void setActionResult(String actionResult) {
+        this.actionResult = actionResult;
     }
 
     public String getBrowserName() {
         return browserName;
     }
 
-    public void setBrowserName(String browser_name) {
-        this.browserName = browser_name;
+    public void setBrowserName(String browserName) {
+        this.browserName = browserName;
     }
 
     public String getOsName() {
         return osName;
     }
 
-    public void setOsName(String os_name) {
-        this.osName = os_name;
+    public void setOsName(String osName) {
+        this.osName = osName;
     }
 
     public String getLocation() {
