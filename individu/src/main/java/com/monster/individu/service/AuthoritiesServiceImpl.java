@@ -1,6 +1,7 @@
 package com.monster.individu.service;
 
 import com.monster.individu.dto.AuthoritiesDto;
+import com.monster.individu.dto.UserRole;
 import com.monster.individu.entity.Authorities;
 import com.monster.individu.mappeur.AuthoritiesMapper;
 import com.monster.individu.repository.AuthoritiesRepository;
@@ -25,5 +26,10 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
     @Override
     public AuthoritiesDto retrieveUserAutorities(String username) {
         return authoritiesMapper.mapToDto(authoritiesRepository.findByUsername(username));
+    }
+
+    @Override
+    public AuthoritiesDto updateAuthority(AuthoritiesDto authorityDto) {
+        return authoritiesMapper.mapToDto(authoritiesRepository.save(authoritiesMapper.mapToEntity(authorityDto)));
     }
 }

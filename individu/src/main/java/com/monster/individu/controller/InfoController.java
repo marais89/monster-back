@@ -42,6 +42,20 @@ public class InfoController {
         return individuFacade.findByUsername(username);
     }
 
+    @RequestMapping(path = "/individus/upgradeUserToBusinessAdmin/username/{username}", method = RequestMethod.POST)
+    //@Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @ApiOperation(value = "upgrade user authority", authorizations = @Authorization("jwt"))
+    public AuthoritiesDto upgradeUserToBusinessAdmin(@PathVariable(USERNAME) String username) {
+        return individuFacade.upgradeAuthority(username, UserRole.ROLE_BUSINESS_ADMIN);
+    }
+
+    @RequestMapping(path = "/individus/upgradeUser/username/{username}", method = RequestMethod.POST)
+    @Secured({ "ROLE_ADMIN", "ROLE_BUSINESS_ADMIN" })
+    @ApiOperation(value = "upgrade user authority", authorizations = @Authorization("jwt"))
+    public AuthoritiesDto upgradeUserAuthority(@PathVariable(USERNAME) String username) {
+        return individuFacade.upgradeAuthority(username, UserRole.ROLE_SUPERUSER);
+    }
+
     @RequestMapping(path = "/individus/checkEmail", method = RequestMethod.POST)
     @ApiOperation(value = "checker l'utilisateur par son email")
     public CheckUserDto getByEmail(@RequestBody UpdateStatusRequest updateStatusRequest) {

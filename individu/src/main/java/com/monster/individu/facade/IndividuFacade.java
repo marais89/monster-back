@@ -1,5 +1,7 @@
 package com.monster.individu.facade;
 
+import java.util.List;
+
 import com.monster.history.dto.ActionResult;
 import com.monster.history.dto.ActionType;
 import com.monster.history.dto.EventsDto;
@@ -17,8 +19,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @SuppressWarnings("JavaDoc")
 @Service
@@ -72,6 +72,13 @@ public class IndividuFacade {
             individuDto.lastConnexion = eventsDto.datetime;
         }
         return buildIndividuGlobalInfosDto(username, individuDto);
+    }
+
+    public AuthoritiesDto upgradeAuthority(String username, UserRole authority) {
+        AuthoritiesDto authoritiesDto = new AuthoritiesDto();
+        authoritiesDto.username = username;
+        authoritiesDto.authority = authority.name();
+        return authoritiesService.updateAuthority(authoritiesDto);
     }
 
     /**
@@ -130,7 +137,9 @@ public class IndividuFacade {
         EventsDto generateKeyEvent = null;
 
         SavingResponseDto code = checkIfUserExiste(individuRequest);
-        if (code != null) return code;
+        if (code != null) {
+            return code;
+        }
         try {
             saveUserEvent = historyFacade.saveHistory(individuRequest.requestContext, ActionType.CREATE_ACCOUNT, ActionResult.INIT);
 
@@ -143,7 +152,9 @@ public class IndividuFacade {
             generateKeyEvent = historyFacade.saveHistory(individuRequest.requestContext, ActionType.GENERATE_AND_SAVE_VALIDATION_KEY, ActionResult.OK);
 
             SavingResponseDto codeRetour = sendValidationEmail(individuRequest, validationKeysDto);
-            if (codeRetour != null) return codeRetour;
+            if (codeRetour != null) {
+                return codeRetour;
+            }
 
             return new SavingResponseDto(SavingCodeResponse.OK.code);
 

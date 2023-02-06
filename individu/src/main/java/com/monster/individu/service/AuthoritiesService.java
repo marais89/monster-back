@@ -8,4 +8,6 @@ public interface AuthoritiesService {
     void saveAutorithies(Authorities authorities);
 
     AuthoritiesDto retrieveUserAutorities(String username);
+
+    AuthoritiesDto updateAuthority(AuthoritiesDto authority);
 }
