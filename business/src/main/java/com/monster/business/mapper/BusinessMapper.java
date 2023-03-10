@@ -1,7 +1,11 @@
 package com.monster.business.mapper;
 
 import com.monster.business.dto.BusinessDto;
+import com.monster.business.dto.BusinessGroupDto;
+import com.monster.business.dto.UserBusinessRelationDto;
 import com.monster.business.entity.Business;
+import com.monster.business.entity.BusinessGroup;
+import com.monster.business.entity.UserBusinessRelation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,5 +16,13 @@ public interface BusinessMapper {
     BusinessDto mapToDto(Business business);
 
     Business mapToEntity(BusinessDto businessDto);
+
+    BusinessGroupDto mapToDto(BusinessGroup businessGroup);
+
+    BusinessGroup mapToEntity(BusinessGroupDto businessGroupDto);
+
+    UserBusinessRelation mapToEntity(UserBusinessRelationDto userBusinessRelation);
+
+    UserBusinessRelationDto mapToDto(UserBusinessRelation userBusinessRelationDto);
 
 }

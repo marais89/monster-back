@@ -15,6 +15,7 @@
         <module>authent</module>
         <module>business</module>
         <module>address</module>
+        <module>schedule</module>
     </modules>
 
     <parent>
