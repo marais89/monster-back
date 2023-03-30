@@ -67,23 +67,29 @@ public class BusinessController {
 
     @PostMapping("/business/userBusinessRelation/save")
     @ApiOperation(value = "save user business relation", authorizations = @Authorization("jwt"))
-    public UserBusinessRelationDto saveUserBusinessRelation(UserBusinessRelationDto userBusinessRelationDto) {
+    public UserBusinessRelationDto saveUserBusinessRelation(@RequestBody UserBusinessRelationDto userBusinessRelationDto) {
         return businessFacade.saveUserBusinessRelation(userBusinessRelationDto);
     }
 
-    @PostMapping("/business/userBusinessRelation/userId/{userId}")
+    @GetMapping("/business/userBusinessRelation/userId/{userId}")
     @ApiOperation(value = "find user business relation by user id", authorizations = @Authorization("jwt"))
     public List<UserBusinessRelationDto> findUserBusinessRelationByUserId(@PathVariable(USER_ID) int userId) {
         return businessFacade.findUserBusinessRelationByUserId(userId);
     }
 
-    @PostMapping("/business/userBusinessRelation/businessId/{businessId}")
+    @GetMapping("/business/userBusinessRelation/businessId/{businessId}/userId/{userId}")
+    @ApiOperation(value = "find user business relation by user id and business id", authorizations = @Authorization("jwt"))
+    public List<UserBusinessRelationDto> findUserBusinessRelationByBusinessIdAndUserId(@PathVariable(BUSINESS_ID) int businessId, @PathVariable(USER_ID) int userId) {
+        return businessFacade.findUserBusinessRelationByBusinessIdAndUserId(businessId, userId);
+    }
+
+    @GetMapping("/business/userBusinessRelation/businessId/{businessId}")
     @ApiOperation(value = "find user business relation by business id", authorizations = @Authorization("jwt"))
     public List<UserBusinessRelationDto> findUserBusinessRelationByBusinessId(@PathVariable(BUSINESS_ID) int businessId) {
         return businessFacade.findUserBusinessRelationByBusinessId(businessId);
     }
 
-    @PostMapping("/business/userBusinessRelation/userId/{groupId}")
+    @GetMapping("/business/userBusinessRelation/groupId/{groupId}")
     @ApiOperation(value = "find user business relation by group id", authorizations = @Authorization("jwt"))
     public List<UserBusinessRelationDto> findUserBusinessRelationByGroupId(@PathVariable(GROUP_ID) int groupId) {
         return businessFacade.findUserBusinessRelationByGroupId(groupId);

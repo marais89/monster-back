@@ -60,4 +60,8 @@ public class BusinessFacade {
     public UserBusinessRelationDto updateStatusUserBusinessRelation(int userBusinessRelationId, UserBusinessStatus status) throws NotFoundException {
         return businessService.updateStatusUserBusinessRelation(userBusinessRelationId, status);
     }
+
+    public List<UserBusinessRelationDto> findUserBusinessRelationByBusinessIdAndUserId(int businessId, int userId) {
+        return businessService.findUserBusinessRelationByBusinessIdAndUserId(businessId, userId);
+    }
 }

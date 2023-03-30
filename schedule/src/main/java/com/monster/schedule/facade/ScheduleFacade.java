@@ -28,9 +28,9 @@ public class ScheduleFacade {
         return projectService.findByBusinessId(businessId);
     }
 
-    public List<ScheduleDto> retrieveDailyPlanningbyPeriod(Integer userId, Period period) {
+    public List<ScheduleDto> retrieveDailyPlanningbyPeriod(Integer relationId, Period period) {
 
-        return sheaduleService.retrieveDailyPlanningbyPeriod(userId, period);
+        return sheaduleService.retrieveDailyPlanningbyPeriod(relationId, period);
     }
 
     public List<ScheduleDto> save(List<ScheduleDto> schedules) {

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserBusinessRelationRepository extends CrudRepository<UserBusinessRelation, Integer> {
 
-    List<UserBusinessRelation> findUserBusinessRelationByIndividuId(int individuId);
+    List<UserBusinessRelation> findUserBusinessRelationsByIndividuId(int individuId);
+
+    List<UserBusinessRelation> findUserBusinessRelationByBusinessIdAndIndividuId(int businessId, int individuId);
 
     List<UserBusinessRelation> findUserBusinessRelationByBusinessId(int businessId);
 

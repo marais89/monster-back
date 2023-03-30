@@ -1,10 +1,11 @@
 package com.monster.business.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "userBusinessRelations")
-public class UserBusinessRelation {
+public class UserBusinessRelation implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +14,15 @@ public class UserBusinessRelation {
     private int individuId;
     @Column(name = "id_business")
     private int businessId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(insertable = true, updatable = true, name = "business_id")
+    private Business business;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(insertable = true, updatable = true, name = "group_id")
+    private BusinessGroup businessGroup;
+
     @Column(name = "id_group")
     private int groupId;
     @Column(name = "role")
@@ -42,6 +52,22 @@ public class UserBusinessRelation {
 
     public void setBusinessId(int businessId) {
         this.businessId = businessId;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+
+    public BusinessGroup getBusinessGroup() {
+        return businessGroup;
+    }
+
+    public void setBusinessGroup(BusinessGroup businessGroup) {
+        this.businessGroup = businessGroup;
     }
 
     public int getGroupId() {

@@ -3,24 +3,24 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS authorities;
 DROP TABLE IF EXISTS validationKeys;
 DROP TABLE IF EXISTS events;
-DROP TABLE IF EXISTS business;
+DROP TABLE IF EXISTS business CASCADE;
 DROP TABLE IF EXISTS address;
 DROP TABLE IF EXISTS governorate;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS schedule CASCADE;
 DROP TABLE IF EXISTS activity CASCADE;
 DROP TABLE IF EXISTS project CASCADE;
-DROP TABLE  IF EXISTS userBusinessRelations;
-DROP TABLE  IF EXISTS businessGoup;
-DROP TABLE  IF EXISTS scheduleRepport;
+DROP TABLE IF EXISTS userBusinessRelations CASCADE;
+DROP TABLE IF EXISTS businessGoup CASCADE;
+DROP TABLE IF EXISTS scheduleRepport;
 
 
 
 CREATE TABLE country
 (
     id     int(8) primary key not null,
-    name   varchar(100) not null,
-    active TINYINT      not null
+    name   varchar(100)       not null,
+    active TINYINT            not null
 );
 
 insert into country (id, name, active)
@@ -30,8 +30,8 @@ VALUES (1, 'TUNISIA', 1),
 CREATE TABLE governorate
 (
     id         int(8) primary key not null,
-    name       varchar(100) not null,
-    country_id int(8) not null,
+    name       varchar(100)       not null,
+    country_id int(8)             not null,
     constraint country_ibfk_1
         foreign key (country_id) references country (id),
     constraint country_uni_1
@@ -68,10 +68,10 @@ VALUES (1, 'TUNIS', 1),
 CREATE TABLE address
 (
     id             int(8) primary key not null,
-    governorate_id int(8) not null,
-    town           varchar(100) not null,
-    city           varchar(100) not null,
-    code           int(4) not null,
+    governorate_id int(8)             not null,
+    town           varchar(100)       not null,
+    city           varchar(100)       not null,
+    code           int(4)             not null,
     constraint address_ibfk_1
         foreign key (governorate_id) references governorate (id)
 );
@@ -4925,20 +4925,20 @@ VALUES (0, 2, 'Ariana Ville', 'Centre Commercial Ikram', 2037),
 
 create table individu
 (
-    id                 int(8) not null auto_increment primary key,
-    nom                varchar(20) null,
-    prenom             varchar(20) null,
+    id                 int(8)              not null auto_increment primary key,
+    nom                varchar(20)         null,
+    prenom             varchar(20)         null,
     username           varchar(20) unique  not null,
-    address_id         int(8) null,
-    address_complement varchar(200) null,
+    address_id         int(8)              null,
+    address_complement varchar(200)        null,
     email              varchar(100) unique not null,
-    date_naissance     date null,
-    numero_tel         varchar(32) null,
-    date_creation      date null,
+    date_naissance     date                null,
+    numero_tel         varchar(32)         null,
+    date_creation      date                null,
     niveau             int default 0       not null,
-    status             varchar(20) null,
-    user_image         mediumblob null,
-    date_ceation       date null,
+    status             varchar(20)         null,
+    user_image         mediumblob          null,
+    date_ceation       date                null,
     constraint individu_fk_1
         foreign key (address_id) references address (id)
 );
@@ -4965,13 +4965,13 @@ VALUES (1, 'Aliko', 'Dangote', 'alikod', 1, 'complement adresse', 'test.test@gma
 create table business
 (
     id               int(8) primary key auto_increment not null,
-    name             varchar(50) unique not null,
-    descreption      varchar(1000)      not null,
-    creator_id       int                not null,
+    name             varchar(50) unique                not null,
+    descreption      varchar(1000)                     not null,
+    creator_id       int                               not null,
     logo             mediumblob,
-    creation_date    TIMESTAMP          not null,
-    physical_address varchar(100)       not null,
-    status           varchar(20)        not null,
+    creation_date    TIMESTAMP                         not null,
+    physical_address varchar(100)                      not null,
+    status           varchar(20)                       not null,
 
     constraint business_fk_1
         foreign key (creator_id) references individu (id)
@@ -5012,10 +5012,10 @@ VALUES ('alikod', 'ROLE_ADMIN'),
 CREATE TABLE validationKeys
 (
     id            int(8) primary key auto_increment not null,
-    username      varchar(50)       not null,
-    secret        varchar(50)       not null,
-    creation_date TIMESTAMP         not null,
-    used          tinyint default 0 not null
+    username      varchar(50)                       not null,
+    secret        varchar(50)                       not null,
+    creation_date TIMESTAMP                         not null,
+    used          tinyint default 0                 not null
 );
 
 insert into validationKeys(id, username, secret, creation_date, used)
@@ -5044,98 +5044,100 @@ VALUES ('alikod', '2011-12-18 13:17:17', 'AUTHENTICATION', null, 'KO', 'chrome',
 CREATE TABLE project
 (
     id          int(8) primary key auto_increment not null,
-    code        varchar(8) not null,
+    code        varchar(8)                        not null,
     name        varchar(20),
     description varchar(100),
-    business_id int(8) not null,
+    business_id int(8)                            not null,
     color       varchar(20),
-    constraint project_ibfk_1 foreign key (business_id) references business(id)
+    constraint project_ibfk_1 foreign key (business_id) references business (id)
 );
 
 insert into project(id, code, name, description, business_id, color)
 values (1, 'p100', 'project_1', 'description of the project 1', 1, '#0000ff'),
-         (2, 'p200', 'project_2', 'description of the project 2', 1, '#8a2be2');
-
-CREATE TABLE schedule
-(
-  id int(8) primary key auto_increment not null,
-  planning_date TIMESTAMP,
-  user_id int(8),
-  constraint schedule_ibfk_1
-      foreign key (user_id) references individu (id),
-  constraint schedule_ibu_1
-      unique (planning_date, user_id)
-
-);
-
-insert into schedule(id, planning_date, user_id)
-values ( 1, '2023-02-06', 1),
-        ( 2, '2023-02-07',1),
-        ( 3, '2023-02-08',1),
-        ( 4, '2023-02-09',1),
-        ( 5, '2023-02-10',1);
-
-CREATE TABLE activity
-(
-    id int(8) primary key auto_increment not null,
-    schedule_id int(8) not null,
-    project_id int(8) not null,
-    duration int(2) not null,
-    comment varchar(200),
-    constraint activity_ibu_1 unique (schedule_id, project_id),
-    constraint activity_ibfk_2 foreign key (project_id) references project(id),
-    constraint activity_ibfk_1 foreign key (schedule_id) references schedule(id)
-
-);
-
-
-insert into activity (id, schedule_id, project_id, duration, comment)
-values (100, 1, 1, 4, 'comment1'),
-    (101, 1, 2, 4, 'comment1'),
-    (102, 2, 2, 8, 'comment2'),
-    (103, 3, 1, 8, 'comment3'),
-    (104, 4, 2, 8, 'comment4'),
-    (105, 5, 1, 8, 'comment5');
+       (2, 'p200', 'project_2', 'description of the project 2', 1, '#8a2be2');
 
 CREATE TABLE businessGoup
 (
-    id int(8) primary key auto_increment not null,
-    name varchar(20) not null,
+    id          int(8) primary key auto_increment not null,
+    name        varchar(20)                       not null,
     description varchar(100),
-    id_business int(8) not null,
-    active TINYINT      not null,
-    constraint businessGoup_fk2 foreign key (id_business) REFERENCES business(id)
+    id_business int(8)                            not null,
+    active      TINYINT                           not null,
+    constraint businessGoup_fk2 foreign key (id_business) REFERENCES business (id)
 );
 
-insert into businessGoup (id, name, description, id_business, active)
+insert into businessGoup(id, name, description, id_business, active)
 values (1, 'GROUPE_1', 'description', 1, 1),
        (2, 'GROUPE_2', 'description', 1, 1);
 
 
 CREATE TABLE userBusinessRelations
 (
-    id int(8) primary key auto_increment,
-    id_individu int(8) not null,
-    id_business int(8) not null,
-    role varchar(10) not null,
-    id_group int(8) not null,
-    status varchar(10) not null,
-    constraint userBusinessRelation_ibfk_1 foreign key (id_group) references businessGoup(id),
-    constraint userBusinessRelation_ibfk_2 foreign key (id_individu) references individu(id),
-    constraint userBusinessRelation_ibfk_3 foreign key (id_business) references business(id)
+    id          int(8) primary key auto_increment,
+    id_individu int(8)      not null,
+    id_business int(8)      not null,
+    role        varchar(10) not null,
+    id_group    int(8)      null,
+    status      varchar(10) not null,
+    constraint userBusinessRelation_ibfk_1 foreign key (id_group) references businessGoup (id),
+    constraint userBusinessRelation_ibfk_2 foreign key (id_individu) references individu (id),
+    constraint userBusinessRelation_ibfk_3 foreign key (id_business) references business (id),
+    constraint userBusinessRelation_ibuk_1 unique (id_individu, id_business, role)
 );
 
-insert into userBusinessRelations (id, id_individu, id_business, role, id_group, status)
-values (1, 1, 1, 'RESP', 1, 'active'),
-       (2, 2, 1, 'USER', 1, 'active');
+insert into userBusinessRelations(id, id_individu, id_business, role, id_group, status)
+values (1, 1, 1, 'MEMBER', 1, 'active'),
+       (2, 2, 1, 'MEMBER', 1, 'active');
+
+CREATE TABLE schedule
+(
+    id            int(8) primary key auto_increment not null,
+    planning_date TIMESTAMP,
+    relation_id   int(8),
+    constraint schedule_ibfk_1
+        foreign key (relation_id) references userBusinessRelations (id),
+    constraint schedule_ibu_1
+        unique (planning_date, relation_id)
+
+);
+
+insert into schedule(id, planning_date, relation_id)
+values (1, '2023-02-06', 1),
+       (2, '2023-02-07', 1),
+       (3, '2023-02-08', 1),
+       (4, '2023-02-09', 1),
+       (5, '2023-02-10', 1);
+
+CREATE TABLE activity
+(
+    id          int(8) primary key auto_increment not null,
+    schedule_id int(8)                            not null,
+    project_id  int(8)                            not null,
+    duration    int(2)                            not null,
+    comment     varchar(200),
+    constraint activity_ibu_1 unique (schedule_id, project_id),
+    constraint activity_ibfk_2 foreign key (project_id) references project (id),
+    constraint activity_ibfk_1 foreign key (schedule_id) references schedule (id)
+
+);
+
+insert into activity(id, schedule_id, project_id, duration, comment)
+values (100, 1, 1, 4, 'comment1'),
+       (101, 1, 2, 4, 'comment1'),
+       (102, 2, 2, 8, 'comment2'),
+       (103, 3, 1, 8, 'comment3'),
+       (104, 4, 2, 8, 'comment4'),
+       (105, 5, 1, 8, 'comment5');
 
 CREATE TABLE scheduleRepport
 (
-    id int(8) primary key auto_increment,
-    id_relation int(8) not null,
-    month_repport date not null,
-    status varchar(10) not null,
+    id            int(8) primary key auto_increment,
+    id_relation   int(8)      not null,
+    month_repport varchar(7)  not null,
+    status        varchar(10) not null,
     constraint scheduleRepport_ibu_1 unique (id_relation, month_repport),
-    constraint scheduleRepport_ibfk_1 foreign key (id_relation) references userBusinessRelations(id)
+    constraint scheduleRepport_ibfk_1 foreign key (id_relation) references userBusinessRelations (id)
 );
+
+
 

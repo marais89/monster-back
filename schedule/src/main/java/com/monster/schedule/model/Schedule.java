@@ -15,7 +15,7 @@ public class Schedule implements Serializable {
 
     private LocalDate planningDate;
 
-    private Integer userId;
+    private Integer relationId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "SCHEDULE_ID")
     private List<Activity> activities;
@@ -36,12 +36,12 @@ public class Schedule implements Serializable {
         this.planningDate = planningDate;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getRelationId() {
+        return relationId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setRelationId(Integer relationId) {
+        this.relationId = relationId;
     }
 
     public List<Activity> getActivities() {

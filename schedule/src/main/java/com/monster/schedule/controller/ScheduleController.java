@@ -18,7 +18,7 @@ public class ScheduleController {
 
 
     public static final String BUSINESS_ID = "businessId";
-    public static final String USERID = "userId";
+    public static final String RELATIONID = "relationId";
     @Autowired
     private final ScheduleFacade scheduleFacade;
 
@@ -32,10 +32,10 @@ public class ScheduleController {
         return scheduleFacade.findByBusinessId(businessId);
     }
 
-    @RequestMapping(path = "/schedule/userId/{userId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/schedule/relationId/{relationId}", method = RequestMethod.POST)
     @ApiOperation(value = "get daily planning by period", authorizations = @Authorization("jwt"))
-    public List<ScheduleDto> retrievePlannigByPeriod(@PathVariable(USERID) Integer userId, @RequestBody Period period) {
-        return scheduleFacade.retrieveDailyPlanningbyPeriod(userId, period);
+    public List<ScheduleDto> retrievePlannigByPeriod(@PathVariable(RELATIONID) Integer relationId, @RequestBody Period period) {
+        return scheduleFacade.retrieveDailyPlanningbyPeriod(relationId, period);
     }
 
     @RequestMapping(path = "/schedule/save", method = RequestMethod.POST)

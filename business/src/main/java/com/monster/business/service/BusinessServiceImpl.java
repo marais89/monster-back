@@ -81,7 +81,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public List<UserBusinessRelationDto> findUserBusinessRelationByUserId(int userId) {
-        return userBusinessRelationRepository.findUserBusinessRelationByIndividuId(userId)
+        return userBusinessRelationRepository.findUserBusinessRelationsByIndividuId(userId)
                 .stream()
                 .map(ubr -> businessMapper.mapToDto(ubr))
                 .collect(Collectors.toList());
@@ -89,7 +89,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public List<UserBusinessRelationDto> findUserBusinessRelationByBusinessId(int businessId) {
-        return userBusinessRelationRepository.findUserBusinessRelationByIndividuId(businessId)
+        return userBusinessRelationRepository.findUserBusinessRelationsByIndividuId(businessId)
                 .stream()
                 .map(ubr -> businessMapper.mapToDto(ubr))
                 .collect(Collectors.toList());
@@ -97,7 +97,7 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public List<UserBusinessRelationDto> findUserBusinessRelationByGroupId(int groupId) {
-        return userBusinessRelationRepository.findUserBusinessRelationByIndividuId(groupId)
+        return userBusinessRelationRepository.findUserBusinessRelationsByIndividuId(groupId)
                 .stream()
                 .map(ubr -> businessMapper.mapToDto(ubr))
                 .collect(Collectors.toList());
@@ -106,11 +106,19 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public UserBusinessRelationDto updateStatusUserBusinessRelation(int userBusinessRelationId, UserBusinessStatus status) throws NotFoundException {
         Optional<UserBusinessRelation> ubr = userBusinessRelationRepository.findById(userBusinessRelationId);
-        if(ubr.isPresent()){
+        if (ubr.isPresent()) {
             ubr.get().setStatus(status);
-          return businessMapper.mapToDto(userBusinessRelationRepository.save(ubr.get()));
+            return businessMapper.mapToDto(userBusinessRelationRepository.save(ubr.get()));
         }
         throw new NotFoundException("user business relation not found  !");
+    }
+
+    @Override
+    public List<UserBusinessRelationDto> findUserBusinessRelationByBusinessIdAndUserId(int businessId, int userId) {
+        return userBusinessRelationRepository.findUserBusinessRelationByBusinessIdAndIndividuId(businessId, userId)
+                .stream()
+                .map(ubr -> businessMapper.mapToDto(ubr))
+                .collect(Collectors.toList());
     }
 
 

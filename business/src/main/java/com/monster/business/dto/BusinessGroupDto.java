@@ -6,8 +6,6 @@ public class BusinessGroupDto {
 
     public String name;
 
-    public int idResponsable;
-
     public int idBusiness;
 
     public boolean active;

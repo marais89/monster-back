@@ -9,9 +9,9 @@ public class UserBusinessRelationDto {
 
     public int individuId;
 
-    public int businessId;
+    public BusinessDto business;
 
-    public int groupId;
+    public BusinessGroupDto businessGroup;
 
     public UserBusinessRole role;
 

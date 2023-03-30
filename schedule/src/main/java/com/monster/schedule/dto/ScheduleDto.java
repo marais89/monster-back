@@ -7,7 +7,7 @@ public class ScheduleDto {
 
     public Integer id;
     public LocalDate planningDate;
-    public Integer userId;
+    public Integer relationId;
     public List<ActivityDto> activities;
 
 }

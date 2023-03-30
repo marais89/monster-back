@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DailyPlanningRepository extends CrudRepository<Schedule, Integer> {
 
-    List<Schedule> findByUserIdAndPlanningDateBetween(int userId, LocalDate startDate, LocalDate endDate);
+    List<Schedule> findByRelationIdAndPlanningDateBetween(int relationId, LocalDate startDate, LocalDate endDate);
 }
